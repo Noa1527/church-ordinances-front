@@ -1,0 +1,109 @@
+<h1 class="text-xl font-bold" mat-dialog-title>Création d'un Membre</h1>
+<mat-dialog-content class="mat-typography">
+    <p class="text-lg font-medium">Membre</p>
+    <p class="text-secondary mb-6">
+        Informations pour la création d'une nouveau Membre
+    </p>
+
+    <form
+        [formGroup]="memberForm"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4"
+    >
+        <mat-form-field class="col-span-full">
+            <mat-label>Prénom</mat-label>
+            <input matInput placeholder="Prénom" formControlName="firstName" />
+        </mat-form-field>
+        
+        <mat-form-field class="col-span-full">
+            <mat-label>Nom de famille</mat-label>
+            <input matInput placeholder="Nom de famille" formControlName="lastName" />
+        </mat-form-field>
+        
+        <mat-form-field class="col-span-full">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="email" formControlName="email" />
+        </mat-form-field>
+        
+        <mat-form-field class="col-span-full">
+            <mat-label>Date de néssance</mat-label>
+            <input matInput placeholder="Année de néssance" formControlName="birthDate" />
+        </mat-form-field>
+        
+        <mat-form-field class="col-span-full">
+            <mat-label>numéro de téléphone</mat-label>
+            <input matInput placeholder="téléphone" formControlName="phone" />
+        </mat-form-field>
+
+        <mat-form-field class="col-span-full">
+            <mat-label>Le sex</mat-label>
+            <input matInput placeholder="Homme ou Femme" formControlName="gender" />
+        </mat-form-field>
+
+        <div formGroupName="ordinance">
+            <label class="text-lg font-medium ms-2">Les Ordonance</label>
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="Baptism">Baptème</mat-checkbox>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="PriestHood">Prétrise</mat-checkbox>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="Initiatory">Pré-Ordonance</mat-checkbox>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="Endowment">Dotation</mat-checkbox>
+            </div>
+
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="Sealing">Scellement</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="w-full" formGroupName="blessing">
+            <label class="text-lg font-medium ms-2">Bénédiction patriarcale</label>
+            <div class="flex flex-col w-full">
+                <mat-checkbox formControlName="is_got">As t'(il ou elle) eu sa bénédiction patriarcale</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="w-full" formGroupName="leaderRoles">
+            <mat-form-field class="col-span-full w-full">
+                <mat-label>De quel Organisation</mat-label>
+                <mat-select placeholder="Quel Organisation" formControlName="roles">
+                    <mat-option value="Président De Branche">Présidence De Branche</mat-option>
+                    <mat-option value="Prêtrise">Prêtrise</mat-option>
+                    <mat-option value="Société Secours">Société Secours</mat-option>
+                    <mat-option value="Jeunes Gens">Jeunes Gens</mat-option>
+                    <mat-option value="Jeunes Filles">Jeunes Filles</mat-option>
+                    <mat-option value="Primaire">Primaire</mat-option>
+                    <mat-option value="Membre">Membre</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="w-full" formGroupName="_family">
+            <mat-form-field class="col-span-full w-full">
+                <mat-label>Le nom de famille</mat-label>
+                <input matInput placeholder="Homme ou Femme" formControlName="name" />
+            </mat-form-field>
+        </div>
+       
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button class="rounded-md" mat-button mat-dialog-close type="button">
+        Annuler
+    </button>
+    <button
+        class="rounded-md"
+        mat-flat-button
+        color="primary"
+        type="button"
+        (click)="submit()">
+        Valider
+    </button>
+</mat-dialog-actions>
+

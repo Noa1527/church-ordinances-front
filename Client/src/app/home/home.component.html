@@ -1,0 +1,54 @@
+<div class="mt-30 h-full w-full">
+    <mat-tab-group class="h-400 min-h-400 max-h-400 bg-gray-100 mt-30 pt-10 pl-10">
+        <!-- je metrais des restriction administratif en fonction de son role pour chaque mat-tab -->
+        <mat-tab *ngIf="authService.hasRole('Président De Branche')" label="Vue Globale (présidence de branche)">
+            <div class="bg-white rounded-2xl">
+                <app-bp>
+                    <ng-content></ng-content>
+                </app-bp>
+                <!-- contenu du onglet -->
+            </div>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="Vue de la présidence des anciens">
+                <app-elder>
+                    <ng-content></ng-content>
+                </app-elder>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="Service pastoral présidence des anciens">
+            <app-elder-pastoral>
+                <ng-content></ng-content>
+            </app-elder-pastoral>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="envois sms + email">
+            <app-elder-sms-mailer>
+                <ng-content></ng-content>
+            </app-elder-sms-mailer>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Société Secours') || authService.hasRole('Président De Branche')" label="Vue de la société de secours">
+                <app-societe>
+                    <ng-content></ng-content>
+                </app-societe>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Jeunes Gens') || authService.hasRole('Président De Branche')" label="Vue des Jeunes filles">
+            <div>
+                <app-jeune-filles>
+                    <ng-content></ng-content>
+                </app-jeune-filles>
+            </div>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Jeunes Filles') || authService.hasRole('Président De Branche')" label="Vue des Jeunes Gens">
+            <div>
+                <app-jeune-gens>
+                    <ng-content></ng-content>
+                </app-jeune-gens>
+            </div>
+        </mat-tab>
+        <mat-tab *ngIf="authService.hasRole('Primaire') || authService.hasRole('Président De Branche')" label="Vue de la primaire">
+            <div>
+                <app-primaire>
+                    <ng-content></ng-content>
+                </app-primaire> 
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>

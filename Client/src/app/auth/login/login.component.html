@@ -1,0 +1,108 @@
+<div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center start" fxLayoutAlign.md="start start" fxFlex>
+    <div class="w-full sm:w-auto md:h-full md:w-1/3 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card"
+        fxLayout="column" fxLayoutAlign="center start" fxLayoutAlign.md="end center">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0" fxLayout="column">
+
+            <!-- Logo -->
+            <div class="w-36">
+                <img mat-card-image src="assets/images/christ.jpg">
+                <h2 class="text-6xl font-bold">LEASY<span class="text-cyan-500">D</span>RIVE</h2>
+                <h4>"Piloter vos actifs"</h4>
+            </div>
+
+            <!-- Title -->
+            <div class="mt-8 text-3xl font-extrabold tracking-tighter leading-tight">Se connecter</div>
+            <div class="flex items-baseline mt-1 font-medium">
+                <div>Vous n'avez pas de compte?</div>
+                <a
+                    class="ml-1 text-primary-500 hover:underline text-cyan-500"
+                    [routerLink]="['/register']">Inscription
+                </a>
+            </div>
+
+            <!-- Alert -->
+            <mat-error
+                class="mt-8"
+                *ngIf="showAlert">
+                {{alert.message}}
+            </mat-error>
+
+            <!-- Login form -->
+            <form
+                class="mt-8"
+                [formGroup]="loginForm"
+                #signInNgForm="ngForm">
+
+                <!-- Email field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Email</mat-label>
+                    <input
+                        id="email"
+                        matInput
+                        [formControlName]="'email'">
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                        L'email est obligatoire
+                    </mat-error>
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+                        Veuillez entrer un email valide
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Mot de passe</mat-label>
+                    <input
+                        id="password"
+                        matInput
+                        type="password"
+                        [formControlName]="'password'"
+                        #passwordField>
+                    <button
+                        mat-icon-button
+                        type="button"
+                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+                        matSuffix>
+                        <mat-icon
+                            *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'Eye'"></mat-icon>
+                        <mat-icon
+                            *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'EyeSlash'"></mat-icon>
+                    </button>
+                    <mat-error>
+                        Le mot de passe est obligatoire
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Submit button -->
+                <button
+                    class="w-full mt-6 bg-cyan-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="loginForm.disabled"
+                    (click)="login()">
+                    <span *ngIf="!loginForm.disabled">
+                        Se connecter
+                    </span>
+                    <mat-progress-spinner
+                        *ngIf="loginForm.disabled"
+                        [diameter]="24"
+                        [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+
+                <!-- Magic sign in -->
+                <a
+                    [routerLink]="['/magic-login']"
+                    class="w-full mt-6 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    mat-flat-button
+                    [color]="'accent'">
+                    <span>Connexion magique</span>
+                </a>
+            </form>
+        </div>
+    </div>
+    <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-connect bg-cover dark:border-l">
+        <!-- Content -->
+    </div>
+</div>
+

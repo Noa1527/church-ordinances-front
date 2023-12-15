@@ -1,0 +1,71 @@
+<div class="min-w-0 magic" >
+    <div class="relative hidden md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l" style="width: 50%;">
+        <!-- Background - @formatter:off -->
+        <!-- Rings -->
+        <!-- ...existing SVG... -->
+        <!-- Dots -->
+        <!-- ...existing SVG... -->
+        <!-- @formatter:on -->
+        <!-- Content -->
+        <div class="z-10 relative w-full max-w-2xl">
+            <div class="text-4xl font-bold leading-none text-gray-100">
+                <div class="mb-8 w-44">
+                    <img src="assets/images/christ.jpg">
+                </div>
+                <div>Bienvenue</div>
+                <div class="text-xl font-light mt-2">Phrase d'accroche</div>
+            </div>
+        </div>
+    </div>
+    <div class="md:flex md:items-center md:justify-start sm:w-auto md:h-full md:w-1/2 py-8 px-4 sm:p-12 md:p-16 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card" style="width: 50%;">
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+            <!-- Logo -->
+            <div class="w-44">
+                <img src="assets/images/leasyGo.jpg">
+            </div>
+
+            <!-- Title -->
+            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Connexion</div>
+
+            <!-- Alert -->
+            <mat-error
+                class="mt-8"
+                *ngIf="showAlert">
+                {{alert.message}}
+            </mat-error>
+
+            <!-- Sign in form -->
+            <form
+                class="mt-8"
+                [formGroup]="magicLoginForm">
+
+                <!-- Email field -->
+                <mat-form-field class="w-full">
+                    <mat-label>Adresse Email</mat-label>
+                    <input
+                        id="email"
+                        matInput
+                        [formControlName]="'email'">
+                    <mat-error *ngIf="magicLoginForm.get('email')?.hasError('required')">
+                        L'adresse email est requise
+                    </mat-error>
+                    <mat-error *ngIf="magicLoginForm.get('email')?.hasError('email')">
+                        Adresse email invalide
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Submit button -->
+                <button
+                    class="mat-flat-button w-full mt-6"
+                    mat-flat-button
+                    [color]="'primary'"
+                    *ngIf="!magicLoginForm.disabled"
+                    (click)="magicLogin()">
+                    <span>
+                        Se connecter
+                    </span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

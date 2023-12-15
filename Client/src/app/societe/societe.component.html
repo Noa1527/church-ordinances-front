@@ -1,0 +1,103 @@
+<div class="app-elder">
+    <mat-table [dataSource]="member" class="mat-elevation-z8">
+  
+        <!-- First Name Column -->
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{member.firstName}} </mat-cell>
+        </ng-container>
+            
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{member.lastName}} </mat-cell>
+        </ng-container>
+    
+        <!-- Email Column -->
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+          <mat-cell *matCellDef="let member"> 
+            <span title="{{member.email}}">{{member.email}}</span> 
+          </mat-cell>
+        </ng-container>
+  
+       <!-- Age Column -->
+        <ng-container matColumnDef="age">
+          <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{getAge(member.birthDate)}} </mat-cell>
+        </ng-container>
+
+        <!-- Phone Column -->
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef> N° Téléphone </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{ member.phone }} </mat-cell>
+        </ng-container>
+          
+        <!-- Gender Column -->
+        <ng-container matColumnDef="gender">
+          <mat-header-cell *matHeaderCellDef> Gender </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{member.gender}} </mat-cell>
+        </ng-container>
+
+        <!-- Baptism Column -->
+        <ng-container matColumnDef="ordinance.Baptism">
+          <mat-header-cell *matHeaderCellDef> Baptême </mat-header-cell>
+          <mat-cell *matCellDef="let member"> 
+            <mat-checkbox [checked]="member.ordinance.Baptism" disabled></mat-checkbox> 
+          </mat-cell>
+        </ng-container>
+        
+        <!--  PriestHood -->
+        <ng-container matColumnDef="ordinance.PriestHood">
+            <mat-header-cell *matHeaderCellDef> Prétrise </mat-header-cell>
+            <mat-cell *matCellDef="let member">  
+                <mat-checkbox [checked]="member.ordinance.PriestHood" disabled></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+        <!--  Initiatory -->
+        <ng-container matColumnDef="ordinance.Initiatory">
+            <mat-header-cell *matHeaderCellDef> Pré-Ordonance </mat-header-cell>
+            <mat-cell *matCellDef="let member">
+                <mat-checkbox [checked]="member.ordinance.Initiatory" disabled></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+         <!--  Endowment -->
+         <ng-container matColumnDef="ordinance.Endowment">
+            <mat-header-cell *matHeaderCellDef> Dotation </mat-header-cell>
+            <mat-cell *matCellDef="let member"> 
+                <mat-checkbox [checked]="member.ordinance.Endowment" disabled></mat-checkbox>  
+            </mat-cell>
+        </ng-container>
+
+         <!--  Sealing -->
+         <ng-container matColumnDef="ordinance.Sealing">
+            <mat-header-cell *matHeaderCellDef> Scellement </mat-header-cell>
+            <mat-cell *matCellDef="let member"> 
+                <mat-checkbox [checked]="member.ordinance.Sealing" disabled></mat-checkbox>
+            </mat-cell>
+        </ng-container>
+
+         <!-- blessing -->
+         <ng-container matColumnDef="blessing.is_got">
+            <mat-header-cell *matHeaderCellDef> Bénediction Patriarcale </mat-header-cell>
+            <mat-cell *matCellDef="let member">
+                <mat-checkbox [checked]="member.blessing.is_got" disabled></mat-checkbox>  
+            </mat-cell>
+        </ng-container>
+
+         <!-- comments -->
+         <ng-container matColumnDef="comments">
+          <mat-header-cell *matHeaderCellDef> commentaires </mat-header-cell>
+          <mat-cell *matCellDef="let member">
+              <mat-checkbox [checked]="member.comments" disabled></mat-checkbox>  
+          </mat-cell>
+      </ng-container>
+
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+</div>

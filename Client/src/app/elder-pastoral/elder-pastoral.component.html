@@ -1,0 +1,52 @@
+<div cdkDropListGroup style="margin:10px; padding:10px;">
+  <div>
+    <div class="example-container">
+      <h2>Membres de la prêtrise</h2>
+  
+      <div
+        cdkDropList
+        id="pretriseMembers"
+        [cdkDropListData]="pretriseMembers"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="team-box bg-slate-500" *ngFor="let member of pretriseMembers" cdkDrag>{{member.firstName + ' ' + member.lastName}}</div>
+      </div>
+    </div>
+
+    <div class="example-container">
+      <h2>Les familles</h2>
+  
+      <div
+        cdkDropList
+        id="familyMembers"
+        [cdkDropListData]="familyMembers"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="family-box bg-slate-300" *ngFor="let family of familyMembers" cdkDrag>{{family.name}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="example-container" *ngFor="let team of teams; index as i">
+      <h2>Équipe {{i + 1}}</h2>
+      <div
+        cdkDropList
+        [id]="i.toString()"
+        [cdkDropListData]="team.members"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <div class="team-box" *ngFor="let member of team.members" cdkDrag>{{getMemberName(member._id || '')}}</div>
+      </div>
+
+    <div
+      cdkDropList
+      [id]="'families' + i.toString()"
+      [cdkDropListData]="team.families"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="family-box" *ngFor="let family of team.families" cdkDrag>{{getFamilyName(family._id || '')}}</div>
+    </div>
+  </div>
+</div>
