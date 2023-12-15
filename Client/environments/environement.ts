@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:3000',
+    // apiUrl: 'https://api-2uvrsjil2-noa1527.vercel.app',
 };
 
 /*
