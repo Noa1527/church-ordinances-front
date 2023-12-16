@@ -64,7 +64,7 @@ export class AuthService {
     login(email: string, password: string): Observable<any> {
         
         return this.http
-            .post<any>('/api/auth/login', { email, password })
+            .post<any>('/auth/login', { email, password })
             .pipe(tap(response => this.setSession(response.access_token)));
     }
     
