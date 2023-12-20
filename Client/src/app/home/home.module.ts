@@ -20,7 +20,6 @@ const routes: Routes = [
     component: HomeComponent,
     canActivate: [() => inject(AuthGuard).canActivate] 
   }
-  // autres routes d'authentification...
 ];
 
 @NgModule({
@@ -31,7 +30,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatTabsModule,
-    RouterModule.forChild(routes), // register the routes
+    RouterModule.forChild(routes), 
     BpModule,
     ElderModule,
     ElderPastoralModule,

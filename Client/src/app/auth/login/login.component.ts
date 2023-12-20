@@ -42,7 +42,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      // rememberMe: ['']
     });
   }
 
@@ -59,7 +58,6 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value.email, this.loginForm.value.password)
     .pipe(
       tap(response => {
-        // handle response here
         // redirect user to home page or another page
         this.router.navigate(['/home']);
       }),

@@ -12,20 +12,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
 // Components
 import { AppComponent } from './app.component';
-
 // Services
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { UserService } from './user/service/user.service';
-
 // Routing
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { httpInterceptorProviders } from './http-interceptors';
 import { MatCardModule } from '@angular/material/card';
-import { ElderSmsMailerComponent } from './elder-sms-mailer/elder-sms-mailer.component';
 
 @NgModule({
   declarations: [

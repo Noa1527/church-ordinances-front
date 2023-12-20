@@ -9,8 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MemberDialogModule } from '../components/member-dialog/member-dialog.module';
 
-
-
 @NgModule({
   declarations: [
     BpComponent

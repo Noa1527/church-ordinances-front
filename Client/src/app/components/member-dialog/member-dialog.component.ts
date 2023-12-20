@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { MemberService } from 'src/app/services/member.service';
 import { Member } from 'src/app/services/member.type';
@@ -26,7 +25,6 @@ export class MemberDialogComponent implements OnInit{
     const formatDate = (dateString: any) => {
       const date = new Date(dateString);
       if (!isNaN(date.getTime())) {
-        // Ajouter un zéro devant les jours et les mois si nécessaire
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
@@ -65,7 +63,6 @@ export class MemberDialogComponent implements OnInit{
   
     if (lastNameControl && familyNameControl) {
       lastNameControl.valueChanges.subscribe(value => {
-        // Update the family name with the new last name
         familyNameControl.setValue(value);
       });
     }
@@ -74,9 +71,8 @@ export class MemberDialogComponent implements OnInit{
     
     if (birthDateControl) {
       birthDateControl.valueChanges.subscribe(value => {
-        // Convertir la date en format JJ/MM/AAAA et mettre à jour le champ
         const formattedDate = formatDate(value);
-        birthDateControl.setValue(formattedDate, { emitEvent: false }); // Ne pas déclencher un nouvel événement de changement
+        birthDateControl.setValue(formattedDate, { emitEvent: false }); 
       });
     }
     

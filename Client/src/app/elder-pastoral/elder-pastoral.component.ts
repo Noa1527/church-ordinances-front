@@ -100,38 +100,25 @@ export class ElderPastoralComponent implements OnInit {
           event.currentIndex,
         );
           
-          console.log('event.container', event.container);
-          
         const isMember = event.container.data[0].firstName !== undefined;
 
         if (event.previousContainer.id === 'pretriseMembers' || event.previousContainer.id === 'familyMembers') {
           if (isMember) {
-            console.log('isMember');
             this._teamsService.updateTeam(event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
           } else {
-            console.log('isFamily');
-
             this._teamsService.updateTeam(event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
           }
         } else if (event.container.id === 'pretriseMembers' || event.container.id === 'familyMembers') {
           if (isMember) {
-            console.log('isMember');
-
             this._teamsService.updateTeam(event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
           } else {
-            console.log('isFamily');
-
             this._teamsService.updateTeam(event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
           }
         } else {
           if (isMember) {
-            console.log('isMember');
-            
             this._teamsService.updateTeam(event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
             this._teamsService.updateTeam(event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
           } else {
-            console.log('isFamily');
-
             this._teamsService.updateTeam(event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
             this._teamsService.updateTeam(event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
           }

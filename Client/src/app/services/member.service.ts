@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { UserService } from 'src/app/user/service/user.service';
 import { Member, Members } from './member.type';
 
 @Injectable({
@@ -14,7 +13,6 @@ export class MemberService {
     constructor(
         private http: HttpClient, 
         public jwtHelper: JwtHelperService,
-        private userService: UserService,
     ) { }
 
     private _members: BehaviorSubject<Members | null> = new BehaviorSubject<Members | null>(null);
@@ -22,8 +20,6 @@ export class MemberService {
     private _leaders: BehaviorSubject<Members | null> = new BehaviorSubject<Members | null>(null);
     private _allMembers: BehaviorSubject<Members | null> = new BehaviorSubject<Members | null>(null);
     private _womenLeaders: BehaviorSubject<Members | null> = new BehaviorSubject<Members | null>(null);
-
-
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -89,15 +85,12 @@ export class MemberService {
     }
     
     public update(id: string, member: Member): Observable<Member> {
-        console.log('updateServiceArtisan', member);
         return this.members$.pipe(
             take(1),
             switchMap((members: Members | null) =>
                 this.http.put<Member>(`/api/member/${id}`, member).pipe(
                     tap((response: Member) => {
                         if (members) {
-                            console.log('members update', members);
-                            
                             const index = members.findIndex((o) => o._id === response._id);
                             if (index >= 0) {
                                 members[index] = {
@@ -130,12 +123,4 @@ export class MemberService {
             ),
         );
     }
-
-    // getAllMembersByRoleBP(role: string): Observable<any> {
-    //     return this.http.get<any>(`/api/member/${role}`);
-    // }
-    // getAllMembersByRolemember(role: string): Observable<any> {
-    //     return this.http.get<any>(`/api/member/${role}`);
-    // }
-
 }

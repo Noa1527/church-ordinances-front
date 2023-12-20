@@ -1,27 +1,3 @@
-/* form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-  
-mat-form-field {
-    width: 100%; 
-    margin-bottom: 20px;
-}
-
-.form-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; 
-}
-  
-input {
-    width: 50%;  
-    height: 40px; 
-} */
-
 .my-input {
     width: 50%;  
     height: 40px; 

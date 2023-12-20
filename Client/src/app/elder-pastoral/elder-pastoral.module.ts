@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ElderPastoralComponent } from './elder-pastoral.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
-
-
 @NgModule({
   declarations: [
     ElderPastoralComponent

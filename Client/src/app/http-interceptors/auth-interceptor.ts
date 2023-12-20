@@ -10,9 +10,7 @@ export class AuthInterceptor implements HttpInterceptor
     /**
      * Constructor
      */
-    constructor(private _authService: AuthService)
-    {
-    }
+    constructor(private _authService: AuthService){}
 
     /**
      * Intercept
@@ -53,7 +51,6 @@ export class AuthInterceptor implements HttpInterceptor
                     // Reload the app
                     location.reload();
                 }
-
                 return throwError(error);
             })
         );

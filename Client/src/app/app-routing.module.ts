@@ -1,9 +1,5 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { LoginComponent } from './auth/login/login.component';
-// import { SignupComponent } from './auth/signup/signup.component';
-// import { ProfileComponent } from './auth/profile/profile.component';
-import { AuthGuard } from 'src/app/auth/guards/auth.guard';
 
 const routes: Routes = [
 

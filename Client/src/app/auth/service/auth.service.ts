@@ -16,41 +16,20 @@ export class AuthService {
         private userService: UserService,
     ) { }
     
-     // Maintenant, currentUser a un tableau de rôles
-    // currentUser: any = {
-    //     roles: [
-    //         'Président De Branche', 
-    //         'Prêtrise',
-    //         'Société Secours',
-    //         'Jeunes Gens',
-    //         'Jeunes Filles',
-    //         'Primaire',
-    //     ] // Ici, remplacez ceci par les rôles actuels de l'utilisateur.
-    // };
     currentRole: any = {};
 
-  // Cette méthode vérifie si l'utilisateur a un certain rôle
-  public hasRole(role: string): boolean {
-    const currentRole = this.curentUser();
+    // Cette méthode vérifie si l'utilisateur a un certain rôle
+    public hasRole(role: string): boolean {
+        const currentRole = this.curentUser();
 
-    // check if currentUser is valid and if it has the required role
-    if (currentRole && currentRole.roles) {
-        return currentRole.roles.includes(role);
+        // check if currentUser is valid and if it has the required role
+        if (currentRole && currentRole.roles) {
+            return currentRole.roles.includes(role);
+        }
+
+        // if currentUser is not valid or does not have roles, return false
+        return false;
     }
-
-    // if currentUser is not valid or does not have roles, return false
-    return false;
-}
-
-    // forgotPassword(email: string): Observable<any> {
-    //     return this.http.post<any>('/api/auth/forgot-password', { email });
-    // }
-
-    // resetPassword(token: string, newPassword: string): Observable<any> {
-    //     return this.http.post<any>(`/api/users/reset-password/${token}`, {
-    //         newPassword,
-    //     });
-    // }
 
     getAuthorizationToken(): string | null {
         // get the token from local storage
@@ -68,13 +47,6 @@ export class AuthService {
             .pipe(tap(response => this.setSession(response.access_token)));
     }
     
-    // TO LINK
-    // updatePassword(email: string, password: string): Observable<any> {
-    //     return this.http
-    //         .put<any>('/api/auth/login', { email, password })
-    //         .pipe(tap(this.setSession));
-    // }
-
     setSession(token: string): void {
         // set the token in local storage
         localStorage.setItem('access_token', token);
@@ -163,24 +135,7 @@ export class AuthService {
         return decoded;
     }
 
-    // public hasRole(role: string): boolean {
-    //     const token = this.getAuthorizationToken();
-    //     // check if token is set, then check if token is valid
-    //     if (!token || this.jwtHelper.isTokenExpired(token)) {
-    //         return false;
-    //     }
-    //     // get the decoded token and its data to check if the user is an admin
-    //     const decoded = this.jwtHelper.decodeToken(token);
-    //     console.log('decoded', decoded);
-    //     console.log('decoded.roles', decoded.roles);
-    //     console.log('decoded.roles.includes(role)', decoded.roles.includes(role));
-        
-        
-    //     return decoded.roles.includes(role);
-    // }
-
     logout(): void {
         localStorage.removeItem('access_token');
     }
-
 }

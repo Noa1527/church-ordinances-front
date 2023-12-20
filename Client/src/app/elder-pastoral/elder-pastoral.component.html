@@ -2,7 +2,6 @@
   <div>
     <div class="example-container">
       <h2>Membres de la prêtrise</h2>
-  
       <div
         cdkDropList
         id="pretriseMembers"
@@ -15,7 +14,6 @@
 
     <div class="example-container">
       <h2>Les familles</h2>
-  
       <div
         cdkDropList
         id="familyMembers"
@@ -38,7 +36,6 @@
       >
         <div class="team-box" *ngFor="let member of team.members" cdkDrag>{{getMemberName(member._id || '')}}</div>
       </div>
-
     <div
       cdkDropList
       [id]="'families' + i.toString()"

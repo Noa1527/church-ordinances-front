@@ -15,7 +15,6 @@ export class ElderComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   public member: MatTableDataSource<Member>;
   
-
   displayedColumns: string[] = [
     'firstName', 
     'lastName', 
@@ -93,6 +92,4 @@ export class ElderComponent implements OnInit, OnDestroy {
       ref.componentInstance.member = member;
     }
   }
-
-  
 }

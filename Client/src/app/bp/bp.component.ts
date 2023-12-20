@@ -89,9 +89,6 @@ export class BpComponent implements OnInit, OnDestroy {
         width: '100%',
     });
 
-    console.log('ref', ref);
-    
-    
     if (member) {
       ref.componentInstance.member = member;
     }

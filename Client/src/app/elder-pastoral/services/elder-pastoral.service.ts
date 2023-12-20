@@ -55,26 +55,19 @@ export class TeamsService {
   getTeams(): Observable<Team> {
     return this.http.get('/api/teams').pipe(
       tap((brethen: any) => {
-        // console.log(brethen);
         this.teams = brethen;
       })
     );
   }
 
   updateTeam(seq: string, team: any): Observable<Team> {
-    console.log('seq', seq);
-    console.log('team', team);
       const numStr = seq.replace(/\D/g, '');
-      console.log(numStr); // Affiche : "0"
-    
     
     return this.teams$.pipe(
       take(1),
       switchMap((teams: Teams | null) => 
         this.http.patch<Team>(`/api/teams/${numStr}`, team).pipe(
           tap((response: Team) => {
-            console.log('response ---->', response);
-            console.log('teams ---->', teams);
             
             if (teams) {
               const index = teams.findIndex((o) => o._id === response._id);
@@ -96,7 +89,6 @@ export class TeamsService {
   getLeaders(): Observable<Elder> {
     return this.http.get('/api/member/leaders').pipe(
       tap((leaders: any) => {
-        // console.log(leaders);
         this.elders = leaders;
       })
     );
