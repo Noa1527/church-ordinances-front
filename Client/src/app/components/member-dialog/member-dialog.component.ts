@@ -14,6 +14,26 @@ export class MemberDialogComponent implements OnInit{
   @Input()member?: Member;
   public memberForm!: FormGroup;
 
+  public genders = [
+    { name:'Homme' , value: 'H' }, 
+    { name:'Femme' , value: 'F' }
+  ];
+
+  public regions = [
+    { name:'Toul' , value: 'Toul' }, 
+    { name:'Cholet' , value: 'Cholet' }, 
+  ];
+
+  public roles = [
+    { name:'Présidence De Branche' , value: 'Présidence De Branche' }, 
+    { name:'Prêtrise' , value: 'Prêtrise' }, 
+    { name:'Société Secours' , value: 'Société Secours' }, 
+    { name:'Jeunes Gens' , value: 'Jeunes Gens' }, 
+    { name:'Jeunes Filles' , value: 'Jeunes Filles' }, 
+    { name:'Primaire' , value: 'Primaire' }, 
+    { name:'Membre' , value: 'Membre' }, 
+  ];
+  
   constructor(
     private readonly _formBuilder: FormBuilder,
     private readonly _memberService: MemberService,
@@ -40,6 +60,7 @@ export class MemberDialogComponent implements OnInit{
       birthDate: [formatDate(this.member?.birthDate), Validators.required],
       phone: ['', Validators.required],
       gender: ['', Validators.required],
+      regions: ['', Validators.required],
       ordinance: this._formBuilder.group({
         Baptism: [false, Validators.required],
         PriestHood: [false, Validators.required],
@@ -85,6 +106,9 @@ export class MemberDialogComponent implements OnInit{
 
   public submit(): void {
     let obs: Observable<Member>;
+
+    console.log('submit',this.memberForm.value);
+    
 
     if (this.memberForm.invalid) {
         return;

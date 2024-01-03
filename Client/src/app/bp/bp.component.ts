@@ -3,8 +3,10 @@ import { MemberService } from '../services/member.service';
 import { Member, Members } from 'src/app/services/member.type';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { MemberDialogComponent } from '../components/member-dialog/member-dialog.component';
+import { User, Users } from '../user/service/user.types';
+import { UserService } from '../user/service/user.service';
 
 @Component({
   selector: 'app-bp',
@@ -14,13 +16,16 @@ import { MemberDialogComponent } from '../components/member-dialog/member-dialog
 export class BpComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   public member: MatTableDataSource<Member>;
+  public user!: User;
+  public user$!: Observable<User | null>;
   
   displayedColumns: string[] = [
     'firstName', 
     'lastName',
     'email', 
     'age', 
-    'gender', 
+    'gender',
+    'regions', 
     'phone', 
     'ordinance.Baptism', 
     'ordinance.PriestHood', 
@@ -33,19 +38,35 @@ export class BpComponent implements OnInit, OnDestroy {
 
   constructor(
     private memberService: MemberService,
+    private userService: UserService,
     private dialog: MatDialog,
   ) { 
     this.member = new MatTableDataSource();
   }
 
   ngOnInit(): void {
+    console.log('coucou');
+    
+    this.userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
+      console.log('user', user);
+      this.user = user;
+  
+      if (this.user && this.user.regions) {
+        console.log('this.user.regions',this.user.regions);
+        this.memberService.getAllMembers(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+      }
+    });
+  
     this.memberService.allMembers$.pipe(takeUntil(this._unsubscribeAll),
       filter((members: Members | null): members is Members => members !== null),
     ).subscribe((members: Members) => {
       this.member = new MatTableDataSource(members);
     });
-    
-    this.memberService.getAllMembers().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+  
+    this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+  
+    console.log('coucou',this.user$);
+    console.log('coucou',this.member);
   }
 
   ngOnDestroy(): void {

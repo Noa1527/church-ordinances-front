@@ -34,9 +34,18 @@
             <input matInput placeholder="téléphone" formControlName="phone" />
         </mat-form-field>
 
-        <mat-form-field class="col-span-full">
+        <mat-form-field class="col-span-full w-full">
             <mat-label>Le sex</mat-label>
-            <input matInput placeholder="Homme ou Femme" formControlName="gender" />
+            <mat-select placeholder="Homme ou Femme" formControlName="gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender.value">{{gender.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-span-full w-full">
+            <mat-label>De quel Région</mat-label>
+            <mat-select placeholder="Quel Région" formControlName="regions">
+                <mat-option *ngFor="let region of regions" [value]="region.value">{{region.name}}</mat-option>
+            </mat-select>
         </mat-form-field>
 
         <div formGroupName="ordinance">
@@ -71,17 +80,12 @@
 
         <div class="w-full" formGroupName="leaderRoles">
             <mat-form-field class="col-span-full w-full">
-                <mat-label>De quel Organisation</mat-label>
-                <mat-select placeholder="Quel Organisation" formControlName="roles">
-                    <mat-option value="Président De Branche">Présidence De Branche</mat-option>
-                    <mat-option value="Prêtrise">Prêtrise</mat-option>
-                    <mat-option value="Société Secours">Société Secours</mat-option>
-                    <mat-option value="Jeunes Gens">Jeunes Gens</mat-option>
-                    <mat-option value="Jeunes Filles">Jeunes Filles</mat-option>
-                    <mat-option value="Primaire">Primaire</mat-option>
-                    <mat-option value="Membre">Membre</mat-option>
+                <mat-label>De quel Région</mat-label>
+                <mat-select placeholder="Quel Région" formControlName="roles">
+                    <mat-option *ngFor="let role of roles" [value]="role.value">{{role.name}}</mat-option>
                 </mat-select>
             </mat-form-field>
+           
         </div>
 
         <div class="w-full" formGroupName="_family">

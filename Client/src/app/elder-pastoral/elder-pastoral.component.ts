@@ -6,6 +6,8 @@ import { Observable, Subject, combineLatest, map, takeUntil} from 'rxjs';
 import { Elder, Elders } from './services/elder.type';
 import { FamilyService } from '../services/familes/family.service';
 import { Families, Family } from '../services/familes/family.type';
+import { User } from '../user/service/user.types';
+import { UserService } from '../user/service/user.service';
 
 @Component({
   selector: 'app-elder-pastoral',
@@ -22,11 +24,15 @@ export class ElderPastoralComponent implements OnInit {
   public families$!: Observable<Families | null>;
   public team!: Teams | null;
   public teamate: Team[] = [];
+  public user!: User;
+  public user$!: Observable<User | null>;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   
   constructor(
     private _teamsService: TeamsService,
     private _findAllFamily: FamilyService,
+    private _userService: UserService,
+
     ) {}
     
     ngOnInit(): void {
@@ -78,10 +84,18 @@ export class ElderPastoralComponent implements OnInit {
           return !isFamily; 
         });
       });
-
-      this._findAllFamily.findAllFamily().pipe(takeUntil(this._unsubscribeAll)).subscribe();
-      this._teamsService.getLeaders().pipe(takeUntil(this._unsubscribeAll)).subscribe();
-      this._teamsService.getTeams().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+      this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
+        console.log('user', user);
+        this.user = user;
+    
+        if (this.user && this.user.regions) {
+          console.log('this.user.regions',this.user.regions);
+          this._findAllFamily.findAllFamily().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+          this._teamsService.getLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+          this._teamsService.getTeams().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+        }
+      });
+      
     }
 
     ngOnDestroy(): void {

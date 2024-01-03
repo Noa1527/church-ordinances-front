@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Member, Members } from './member.type';
+import { Member, Members, Regions } from './member.type';
 
 @Injectable({
     providedIn: 'root',
@@ -60,29 +60,53 @@ export class MemberService {
         return this._womenLeaders.asObservable();
     }
 
-    public findLeaders(): Observable<Members> {
-        return this.http.get<Members>('/api/member/leaders').pipe(
+    public findLeaders(region: Regions): Observable<Members> {
+        return this.http.get<Members>('/api/member/leaders', { params: { region } }).pipe(
           tap((leaders: any) => {
             this._leaders.next(leaders);
           })
         );
     }
-      
-    public getAllMembers(): Observable<Members> {
-        return this.http.get<Members>('/api/member').pipe(
+    
+    public getAllMembers(region: Regions): Observable<Members> {
+        return this.http.get<Members>('/api/member', { params: { region } }).pipe(
           tap((members: any) => {
             this._allMembers.next(members);
           })
         );
     }
-
-    public findWomenLeaders(): Observable<Members> {
-        return this.http.get<Members>('/api/member/WomenLeaders').pipe(
+    
+    public findWomenLeaders(region: Regions): Observable<Members> {
+        return this.http.get<Members>('/api/member/WomenLeaders', { params: { region } }).pipe(
             tap((leaders: any) => {
                 this._womenLeaders.next(leaders);
             })
         );
     }
+
+    // public findLeaders(): Observable<Members> {
+    //     return this.http.get<Members>('/api/member/leaders').pipe(
+    //       tap((leaders: any) => {
+    //         this._leaders.next(leaders);
+    //       })
+    //     );
+    // }
+      
+    // public getAllMembers(): Observable<Members> {
+    //     return this.http.get<Members>('/api/member').pipe(
+    //       tap((members: any) => {
+    //         this._allMembers.next(members);
+    //       })
+    //     );
+    // }
+
+    // public findWomenLeaders(): Observable<Members> {
+    //     return this.http.get<Members>('/api/member/WomenLeaders').pipe(
+    //         tap((leaders: any) => {
+    //             this._womenLeaders.next(leaders);
+    //         })
+    //     );
+    // }
     
     public update(id: string, member: Member): Observable<Member> {
         return this.members$.pipe(

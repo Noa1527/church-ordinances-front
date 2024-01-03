@@ -17,6 +17,11 @@ export enum LeaderRoles {
     Member = 'Membre',
 }
 
+export enum Regions {
+    Toul = 'Toul',
+    Cholet = 'Cholet',
+}
+
 export interface Member {
     _id?: string;
     firstName?: string;
@@ -29,6 +34,7 @@ export interface Member {
     _ordinance?: Ordinance;
     _blessing?: Blessing;
     gender?: GenderType
+    regions?: Regions;
     _family?: Family;
 }
 

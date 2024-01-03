@@ -40,7 +40,7 @@ export class SocieteComponent implements OnInit {
       this.member = new MatTableDataSource(members);
     });
 
-    this.memberService.findWomenLeaders().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    // this.memberService.findWomenLeaders().pipe(takeUntil(this._unsubscribeAll)).subscribe();
   }
 
   ngOnDestroy(): void {

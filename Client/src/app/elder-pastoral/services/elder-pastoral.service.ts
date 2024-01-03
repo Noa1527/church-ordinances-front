@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap, take, tap } from 'rxjs';
 import { Elder, Elders } from './elder.type';
 import { Team, Teams } from './team.type';
+import { Regions } from 'src/app/services/member.type';
 
 @Injectable({
   providedIn: 'root'
@@ -86,8 +87,8 @@ export class TeamsService {
     );
   }
 
-  getLeaders(): Observable<Elder> {
-    return this.http.get('/api/member/leaders').pipe(
+  getLeaders(region: Regions): Observable<Elder> {
+    return this.http.get('/api/member/leaders', { params: { region } }).pipe(
       tap((leaders: any) => {
         this.elders = leaders;
       })

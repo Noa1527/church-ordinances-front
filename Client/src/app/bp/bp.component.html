@@ -46,6 +46,11 @@
           <mat-cell *matCellDef="let member"> {{member.gender}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="regions">
+          <mat-header-cell *matHeaderCellDef> Région </mat-header-cell>
+          <mat-cell *matCellDef="let member"> {{member.regions}} </mat-cell>
+        </ng-container>
+
         <!-- Baptism Column -->
         <ng-container matColumnDef="ordinance.Baptism">
           <mat-header-cell *matHeaderCellDef> Baptême </mat-header-cell>

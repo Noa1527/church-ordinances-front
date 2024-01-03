@@ -1,10 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MemberService } from '../services/member.service';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { Member, Members } from '../services/member.type';
 import { MemberDialogComponent } from '../components/member-dialog/member-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from '../user/service/user.service';
+import { User } from '../user/service/user.types';
 
 @Component({
   selector: 'app-elder',
@@ -14,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class ElderComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   public member: MatTableDataSource<Member>;
+  public user!: User;
+  public user$!: Observable<User | null>;
   
   displayedColumns: string[] = [
     'firstName', 
@@ -33,19 +37,32 @@ export class ElderComponent implements OnInit, OnDestroy {
 
   constructor(
     private memberService: MemberService,
+    private userService: UserService,
     private dialog: MatDialog,
   ) { 
     this.member = new MatTableDataSource();
   }
 
   ngOnInit(): void {
+
+    this.userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
+      console.log('user', user);
+      this.user = user;
+  
+      if (this.user && this.user.regions) {
+        console.log('this.user.regions',this.user.regions);
+        this.memberService.findLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+      }
+    });
+
     this.memberService.leaders$.pipe(takeUntil(this._unsubscribeAll),
       filter((members: Members | null): members is Members => members !== null),
     ).subscribe((members: Members) => {
       this.member = new MatTableDataSource(members);
     });
     
-    this.memberService.findLeaders().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+
   }
 
   ngOnDestroy(): void {
