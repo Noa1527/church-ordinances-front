@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     // apiUrl: 'http://localhost:3000',
-    apiUrl: 'https://api-hazel-three.vercel.app',
+    apiUrl: 'https://church-ordinances-back.vercel.app',
 };
 
 /*
