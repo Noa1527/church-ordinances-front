@@ -18,7 +18,7 @@
         cdkDropList
         id="familyMembers"
         [cdkDropListData]="familyMembers"
-        class="example-list"
+        class="family-list"
         (cdkDropListDropped)="drop($event)">
         <div class="family-box bg-slate-300" *ngFor="let family of familyMembers" cdkDrag>{{family.name}}</div>
       </div>
