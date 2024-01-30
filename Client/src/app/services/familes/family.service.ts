@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Families, Family } from './family.type';
+import { Regions } from '../member.type';
 
 @Injectable({
     providedIn: 'root',
@@ -40,8 +41,8 @@ export class FamilyService {
         return this._family.asObservable();
     }
 
-    findAllFamily(): Observable<Families> {
-        return this.http.get<Families>('/api/family').pipe(
+    findAllFamily(region: Regions): Observable<Families> {
+        return this.http.get<Families>('/api/family', { params: { region } }).pipe(
           tap((families: Families) => {
             this._families.next(families);
           })

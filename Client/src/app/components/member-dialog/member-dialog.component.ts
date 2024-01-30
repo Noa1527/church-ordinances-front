@@ -75,16 +75,23 @@ export class MemberDialogComponent implements OnInit{
         roles: ['', Validators.required]
       }),
       _family: this._formBuilder.group({
-        name: ['', Validators.required]
+        name: ['', Validators.required],
+        region: ['', Validators.required]
       }),
     });
 
     const lastNameControl = this.memberForm.get('lastName');
+    const regionsControl = this.memberForm.get('regions');
     const familyNameControl = this.memberForm.get('_family.name');
+    const familyRegionsControl = this.memberForm.get('_family.region');
   
-    if (lastNameControl && familyNameControl) {
+    if (lastNameControl && familyNameControl && regionsControl && familyRegionsControl) {
       lastNameControl.valueChanges.subscribe(value => {
         familyNameControl.setValue(value);
+      });
+
+      regionsControl.valueChanges.subscribe(value => {
+        familyRegionsControl.setValue(value);
       });
     }
 

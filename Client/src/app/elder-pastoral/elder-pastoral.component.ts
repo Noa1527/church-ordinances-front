@@ -48,12 +48,18 @@ export class ElderPastoralComponent implements OnInit {
       .pipe(takeUntil(this._unsubscribeAll), map(teams => teams || []))
       .subscribe(teams => {
         this.team = teams;
-        this.team.forEach((team: Team) => {
-          
-          if (this.teamate) {
+        if (this.teamate) {
+          this.teamate = []; // Réinitialisez teamate avant d'ajouter les équipes
+          this.team.forEach((team: Team) => {
             this.teamate.push(team);
-          }
-        });
+          });
+        }
+        // this.team.forEach((team: Team) => {
+          
+        //   if (this.teamate) {
+        //     this.teamate.push(team);
+        //   }
+        // });
       });
 
       combineLatest([
@@ -85,14 +91,12 @@ export class ElderPastoralComponent implements OnInit {
         });
       });
       this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-        console.log('user', user);
         this.user = user;
     
         if (this.user && this.user.regions) {
-          console.log('this.user.regions',this.user.regions);
-          this._findAllFamily.findAllFamily().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+          this._findAllFamily.findAllFamily(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
           this._teamsService.getLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
-          this._teamsService.getTeams().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+          this._teamsService.getTeams(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
         }
       });
       
@@ -117,24 +121,44 @@ export class ElderPastoralComponent implements OnInit {
         const isMember = event.container.data[0].firstName !== undefined;
 
         if (event.previousContainer.id === 'pretriseMembers' || event.previousContainer.id === 'familyMembers') {
+          console.log('<-------- event.container ----->', event.container);
+          
           if (isMember) {
-            this._teamsService.updateTeam(event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
+            console.log('isMember', isMember);
+            console.log('event.previousContainer', event.previousContainer);
+            console.log('event.container.data', event.container.data);
+            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
+        
+            this._teamsService.updateTeam({user: event.container.data}, event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
           } else {
-            this._teamsService.updateTeam(event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
+            console.log('it is a family');
+            console.log('isMember', isMember);
+            console.log('event.previousContainer', event.previousContainer);
+            console.log('event.container.data', event.container.data);
+            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
+            this._teamsService.updateTeam({user: event.container.data},event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
           }
         } else if (event.container.id === 'pretriseMembers' || event.container.id === 'familyMembers') {
+          console.log('isMember', isMember);
+            console.log('event.previousContainer', event.previousContainer);
+            console.log('event.container.data', event.container.data);
+            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
           if (isMember) {
-            this._teamsService.updateTeam(event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data},event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
           } else {
-            this._teamsService.updateTeam(event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data},event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
           }
         } else {
+          console.log('isMember', isMember);
+            console.log('event.previousContainer', event.previousContainer);
+            console.log('event.container.data', event.container.data);
+            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
           if (isMember) {
-            this._teamsService.updateTeam(event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
-            this._teamsService.updateTeam(event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data}, event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data}, event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
           } else {
-            this._teamsService.updateTeam(event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
-            this._teamsService.updateTeam(event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data}, event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
+            this._teamsService.updateTeam({user: event.container.data}, event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
           }
         }
       }
@@ -147,8 +171,9 @@ export class ElderPastoralComponent implements OnInit {
     getMemberName(id: string): string {
 
       let member = this.pretriseMembers.find(m => m._id === id);
-
+      
       this.teams.forEach(team => {
+        
         const teamMember = team.members.find(m => m._id === id);
         if (teamMember) {
           member = teamMember;
@@ -161,16 +186,18 @@ export class ElderPastoralComponent implements OnInit {
     getFamilyName(id: string): string {
 
       let family = this.familyMembers.find(m => m._id === id);
-
+      // console.log('family', family);
+      
       this.teams.forEach(team => {
+        // console.log('team', team);
+        
         const teamFamily = team.families.find(m => m._id === id);
         if (teamFamily) {
           family = teamFamily;
         }
       });
-
+      // console.log('family', family);
+      
       return family ? family.name : '';
     }
-
- 
 }
