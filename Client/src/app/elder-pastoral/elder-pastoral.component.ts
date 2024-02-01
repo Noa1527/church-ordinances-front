@@ -32,7 +32,6 @@ export class ElderPastoralComponent implements OnInit {
     private _teamsService: TeamsService,
     private _findAllFamily: FamilyService,
     private _userService: UserService,
-
     ) {}
     
     ngOnInit(): void {
@@ -108,6 +107,12 @@ export class ElderPastoralComponent implements OnInit {
     }
     
     drop(event: CdkDragDrop<any[]>) {
+
+      function checkId(id: string) {
+        const regex = /^families\d*$/;
+        return regex.test(id);
+      }
+
       if (event.previousContainer === event.container) {
         moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
       } else {
@@ -121,44 +126,44 @@ export class ElderPastoralComponent implements OnInit {
         const isMember = event.container.data[0].firstName !== undefined;
 
         if (event.previousContainer.id === 'pretriseMembers' || event.previousContainer.id === 'familyMembers') {
-          console.log('<-------- event.container ----->', event.container);
-          
           if (isMember) {
-            console.log('isMember', isMember);
-            console.log('event.previousContainer', event.previousContainer);
-            console.log('event.container.data', event.container.data);
-            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
-        
-            this._teamsService.updateTeam({user: event.container.data}, event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
+            if (event.previousContainer.id === 'pretriseMembers') {
+              this._teamsService.updateTeam({user: event.container.data}, event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
+            }
           } else {
-            console.log('it is a family');
-            console.log('isMember', isMember);
-            console.log('event.previousContainer', event.previousContainer);
-            console.log('event.container.data', event.container.data);
-            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
-            this._teamsService.updateTeam({user: event.container.data},event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
+            if (event.container.data.some(m => m.code === 'families') && checkId(event.container.id) && event.previousContainer.id === 'familyMembers') {
+              this._teamsService.updateTeam({user: event.container.data},event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
+            }
           }
         } else if (event.container.id === 'pretriseMembers' || event.container.id === 'familyMembers') {
-          console.log('isMember', isMember);
-            console.log('event.previousContainer', event.previousContainer);
-            console.log('event.container.data', event.container.data);
-            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
           if (isMember) {
             this._teamsService.updateTeam({user: event.container.data},event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
           } else {
             this._teamsService.updateTeam({user: event.container.data},event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
           }
         } else {
-          console.log('isMember', isMember);
-            console.log('event.previousContainer', event.previousContainer);
-            console.log('event.container.data', event.container.data);
-            console.log('event.container.data.map(m => m._id)', event.container.data.map(m => m._id));
-          if (isMember) {
+          if (checkId(event.container.id) && checkId(event.previousContainer.id) ) {
+            // console.log('is not memeber ', isMember);
+            // console.log('checkId(event.previousContainer.id)', checkId(event.previousContainer.id));
+            // console.log('checkId(event.container.id)', checkId(event.container.id));
+            // console.log('event.previousContainer.data', event.previousContainer);
+            // console.log('event.container.data', event.container);
+            // console.log('families prev true',event.previousContainer.data.map(m => m.code));
+            // console.log('families cont map true',event.container.data.map(m => m.code));
+            // console.log('families find true',event.container.data.find(m => m.code === 'families'));
+            
+            if (event.container.data.some(m => m.code === 'families')) {
+              this._teamsService.updateTeam({user: event.container.data}, event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
+              this._teamsService.updateTeam({user: event.container.data}, event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
+            }
+          } else if (!checkId(event.container.id) && !checkId(event.previousContainer.id) ) {
+            // console.log('it is memeber ', isMember);
+            // console.log('checkId(event.previousContainer.id)', checkId(event.previousContainer.id));
+            // console.log('event.previousContainer.id', checkId(event.container.id));
+            
+            
             this._teamsService.updateTeam({user: event.container.data}, event.previousContainer.id, { members: event.previousContainer.data.map(m => m._id) }).subscribe();
             this._teamsService.updateTeam({user: event.container.data}, event.container.id, { members: event.container.data.map(m => m._id) }).subscribe();
-          } else {
-            this._teamsService.updateTeam({user: event.container.data}, event.previousContainer.id, { families: event.previousContainer.data.map(f => f._id) }).subscribe();
-            this._teamsService.updateTeam({user: event.container.data}, event.container.id, { families: event.container.data.map(f => f._id) }).subscribe();
           }
         }
       }
