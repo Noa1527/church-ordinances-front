@@ -1,5 +1,6 @@
 import { Blessing } from "./blessings/blessing.type";
 import { Family } from "./familes/family.type";
+import { Role } from "./leaderRoles/leader-roles.type";
 import { Ordinance } from "./ordinaces/ordinance.type";
 
 export enum GenderType {
@@ -30,7 +31,7 @@ export interface Member {
     birthDate?: Date;
     phone?: string;
     comments?: string[];
-    leaderRoles?: LeaderRoles;
+    leaderRoles?: Role;
     _ordinance?: Ordinance;
     _blessing?: Blessing;
     gender?: GenderType

@@ -81,7 +81,7 @@
         <div class="w-full">
             <mat-form-field class="col-span-full w-full">
                 <mat-label>De quel organisation</mat-label>
-                <mat-select placeholder="Quel Région" formControlName="leaderRoles">
+                <mat-select placeholder="Quel Région" formControlName="leaderRoles" [value]="currentRole">
                     <mat-option *ngFor="let role of leaderRoles$ | async" [value]="role._id">{{role.roles}}</mat-option>
                 </mat-select>
             </mat-form-field>

@@ -17,6 +17,7 @@ export class MemberDialogComponent implements OnInit{
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
   public leaderRoles$!: Observable<Roles | null>;
+  public currentRole = '';
   
   public memberForm!: FormGroup;
   
@@ -48,7 +49,9 @@ export class MemberDialogComponent implements OnInit{
   ) {  }
 
   ngOnInit(): void {
+console.log('member',this.member?.leaderRoles?._id);
 
+    this.currentRole = this.member?.leaderRoles?.roles || '';
     this.leaderRoles$ = this._leaderRolesService.roles$
 
     this._leaderRolesService.findRoles().pipe(takeUntil(this._unsubscribeAll)).subscribe();
@@ -122,6 +125,12 @@ export class MemberDialogComponent implements OnInit{
       console.log(this.member);
       
       this.memberForm.patchValue(this.member);
+    }
+    if (this.member && this.member.leaderRoles) {
+      this.currentRole = this.member.leaderRoles._id || ''; // Utilisez l'ID pour la valeur par défaut
+      this.memberForm.patchValue({
+        leaderRoles: this.currentRole
+      });
     }
   }
 
