@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { LeaderRoleService } from 'src/app/services/leaderRoles/leader-roles.service';
+import { Role, Roles } from 'src/app/services/leaderRoles/leader-roles.type';
 import { MemberService } from 'src/app/services/member.service';
 import { Member } from 'src/app/services/member.type';
 
@@ -12,18 +14,22 @@ import { Member } from 'src/app/services/member.type';
 })
 export class MemberDialogComponent implements OnInit{
   @Input()member?: Member;
-  public memberForm!: FormGroup;
+  private _unsubscribeAll: Subject<any> = new Subject<any>();
 
+  public leaderRoles$!: Observable<Roles | null>;
+  
+  public memberForm!: FormGroup;
+  
   public genders = [
     { name:'Homme' , value: 'H' }, 
     { name:'Femme' , value: 'F' }
   ];
-
+  
   public regions = [
     { name:'Toul' , value: 'Toul' }, 
     { name:'Cholet' , value: 'Cholet' }, 
   ];
-
+  
   public roles = [
     { name:'Présidence De Branche' , value: 'Présidence De Branche' }, 
     { name:'Prêtrise' , value: 'Prêtrise' }, 
@@ -37,10 +43,16 @@ export class MemberDialogComponent implements OnInit{
   constructor(
     private readonly _formBuilder: FormBuilder,
     private readonly _memberService: MemberService,
+    private readonly _leaderRolesService: LeaderRoleService,
     private readonly _dialogRef: MatDialogRef<MemberDialogComponent>,
   ) {  }
 
   ngOnInit(): void {
+
+    this.leaderRoles$ = this._leaderRolesService.roles$
+
+    this._leaderRolesService.findRoles().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+
 
     const formatDate = (dateString: any) => {
       const date = new Date(dateString);
@@ -71,12 +83,14 @@ export class MemberDialogComponent implements OnInit{
       blessing: this._formBuilder.group({
         is_got: [false, Validators.required]
       }),
-      leaderRoles: this._formBuilder.group({
-        roles: ['', Validators.required]
-      }),
+      leaderRoles : ['', Validators.required],
+      // leaderRoles: this._formBuilder.group({
+      //   roles: ['', Validators.required]
+      // }),
       _family: this._formBuilder.group({
         name: ['', Validators.required],
-        region: ['', Validators.required]
+        region: ['', Validators.required],
+        code: ['', Validators.required]
       }),
     });
 

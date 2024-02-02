@@ -30,7 +30,7 @@ export interface Member {
     birthDate?: Date;
     phone?: string;
     comments?: string[];
-    _leaderRoles?: LeaderRoles;
+    leaderRoles?: LeaderRoles;
     _ordinance?: Ordinance;
     _blessing?: Blessing;
     gender?: GenderType
