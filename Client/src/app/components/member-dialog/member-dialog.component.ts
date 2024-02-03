@@ -1,16 +1,43 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { LeaderRoleService } from 'src/app/services/leaderRoles/leader-roles.service';
 import { Role, Roles } from 'src/app/services/leaderRoles/leader-roles.type';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/services/member.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Member } from 'src/app/services/member.type';
+// import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
   selector: 'app-member-dialog',
   templateUrl: './member-dialog.component.html',
-  styleUrls: ['./member-dialog.component.css']
+  styleUrls: ['./member-dialog.component.css'],
+  // providers: [
+  //   {
+  //       provide: MAT_DATE_LOCALE,
+  //       useValue: 'fr-FR',
+  //   },
+  //   {
+  //       provide: DateAdapter,
+  //       useClass: MomentDateAdapter,
+  //       deps: [MAT_DATE_LOCALE],
+  //   },
+  //   {
+  //       provide: MAT_DATE_FORMATS,
+  //       useValue: {
+  //           parse: {
+  //               dateInput: 'LL',
+  //           },
+  //           display: {
+  //               dateInput: 'DD/MM/YYYY',
+  //               monthYearLabel: 'YYYY',
+  //               dateA11yLabel: 'LL',
+  //               monthYearA11yLabel: 'YYYY',
+  //           },
+  //       },
+  //   },
+// ],
 })
 export class MemberDialogComponent implements OnInit{
   @Input()member?: Member;
@@ -73,11 +100,14 @@ console.log('member',this.member?.leaderRoles?._id);
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       birthDate: [formatDate(this.member?.birthDate), Validators.required],
+      aaronicPriesthoodReception: [formatDate(this.member?.aaronicPriesthoodReception), Validators.required],
       phone: ['', Validators.required],
       gender: ['', Validators.required],
       regions: ['', Validators.required],
+      leaderRoles : ['', Validators.required],
       ordinance: this._formBuilder.group({
         Baptism: [false, Validators.required],
+        AaronicPriesthood: [false, Validators.required],
         PriestHood: [false, Validators.required],
         Initiatory: [false, Validators.required],
         Endowment: [false, Validators.required],
@@ -86,10 +116,6 @@ console.log('member',this.member?.leaderRoles?._id);
       blessing: this._formBuilder.group({
         is_got: [false, Validators.required]
       }),
-      leaderRoles : ['', Validators.required],
-      // leaderRoles: this._formBuilder.group({
-      //   roles: ['', Validators.required]
-      // }),
       _family: this._formBuilder.group({
         name: ['', Validators.required],
         region: ['', Validators.required],

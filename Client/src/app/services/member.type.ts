@@ -29,6 +29,7 @@ export interface Member {
     lastName?: string;
     email?: string;
     birthDate?: Date;
+    aaronicPriesthoodReception?: Date;
     phone?: string;
     comments?: string[];
     leaderRoles?: Role;
