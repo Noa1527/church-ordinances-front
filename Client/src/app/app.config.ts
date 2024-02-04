@@ -33,7 +33,6 @@ export const appConfig: ApplicationConfig = {
                 paramsInheritanceStrategy: 'always',
             }),
         ),
-
         // Material Date Adapter
         {
             provide: DateAdapter,
