@@ -1,17 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MemberService } from '../services/member.service';
 import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { Member, Members } from '../services/member.type';
 import { MemberDialogComponent } from '../components/member-dialog/member-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserService } from '../user/service/user.service';
 import { User } from '../user/service/user.types';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-elder',
   templateUrl: './elder.component.html',
-  styleUrls: ['./elder.component.css']
+  styleUrls: ['./elder.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+  ],
 })
 export class ElderComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();

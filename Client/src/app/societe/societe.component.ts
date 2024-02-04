@@ -1,13 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Member, Members } from 'src/app/services/member.type';
 import { MemberService } from '../services/member.service';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-societe',
   templateUrl: './societe.component.html',
-  styleUrls: ['./societe.component.css']
+  styleUrls: ['./societe.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ]
 })
 export class SocieteComponent implements OnInit {
 

@@ -1,17 +1,33 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MemberService } from '../services/member.service';
 import { Member, Members } from 'src/app/services/member.type';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Observable, Subject, filter, takeUntil } from 'rxjs';
 import { MemberDialogComponent } from '../components/member-dialog/member-dialog.component';
 import { User, Users } from '../user/service/user.types';
 import { UserService } from '../user/service/user.service';
+import { CommonModule } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-bp',
   templateUrl: './bp.component.html',
-  styleUrls: ['./bp.component.css']
+  styleUrls: ['./bp.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    MemberDialogComponent,
+  ],
 })
 export class BpComponent implements OnInit, OnDestroy {
   private _unsubscribeAll: Subject<any> = new Subject<any>();

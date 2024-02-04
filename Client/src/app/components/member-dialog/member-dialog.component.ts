@@ -1,43 +1,63 @@
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import { LeaderRoleService } from 'src/app/services/leaderRoles/leader-roles.service';
 import { Role, Roles } from 'src/app/services/leaderRoles/leader-roles.type';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/services/member.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Member } from 'src/app/services/member.type';
-// import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { CommonModule } from '@angular/common';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
   selector: 'app-member-dialog',
   templateUrl: './member-dialog.component.html',
   styleUrls: ['./member-dialog.component.css'],
-  // providers: [
-  //   {
-  //       provide: MAT_DATE_LOCALE,
-  //       useValue: 'fr-FR',
-  //   },
-  //   {
-  //       provide: DateAdapter,
-  //       useClass: MomentDateAdapter,
-  //       deps: [MAT_DATE_LOCALE],
-  //   },
-  //   {
-  //       provide: MAT_DATE_FORMATS,
-  //       useValue: {
-  //           parse: {
-  //               dateInput: 'LL',
-  //           },
-  //           display: {
-  //               dateInput: 'DD/MM/YYYY',
-  //               monthYearLabel: 'YYYY',
-  //               dateA11yLabel: 'LL',
-  //               monthYearA11yLabel: 'YYYY',
-  //           },
-  //       },
-  //   },
-// ],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDatepickerModule, 
+    MatNativeDateModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatSelectModule, 
+    MatCheckboxModule, 
+    MatButtonModule, 
+    ReactiveFormsModule, 
+    MatDialogModule
+  ],
+  providers: [
+    {
+        provide: MAT_DATE_LOCALE,
+        useValue: 'fr-FR',
+    },
+    {
+        provide: DateAdapter,
+        useClass: MomentDateAdapter,
+        deps: [MAT_DATE_LOCALE],
+    },
+    {
+        provide: MAT_DATE_FORMATS,
+        useValue: {
+            parse: {
+                dateInput: 'LL',
+            },
+            display: {
+                dateInput: 'DD/MM/YYYY',
+                monthYearLabel: 'YYYY',
+                dateA11yLabel: 'LL',
+                monthYearA11yLabel: 'YYYY',
+            },
+        },
+    },
+],
 })
 export class MemberDialogComponent implements OnInit{
   @Input()member?: Member;
@@ -129,11 +149,11 @@ console.log('member',this.member?.leaderRoles?._id);
     const familyRegionsControl = this.memberForm.get('_family.region');
   
     if (lastNameControl && familyNameControl && regionsControl && familyRegionsControl) {
-      lastNameControl.valueChanges.subscribe(value => {
+      lastNameControl.valueChanges.subscribe((value: any) => {
         familyNameControl.setValue(value);
       });
 
-      regionsControl.valueChanges.subscribe(value => {
+      regionsControl.valueChanges.subscribe((value: any) => {
         familyRegionsControl.setValue(value);
       });
     }
@@ -141,7 +161,7 @@ console.log('member',this.member?.leaderRoles?._id);
     const birthDateControl = this.memberForm.get('birthDate');
     
     if (birthDateControl) {
-      birthDateControl.valueChanges.subscribe(value => {
+      birthDateControl.valueChanges.subscribe((value: any) => {
         const formattedDate = formatDate(value);
         birthDateControl.setValue(formattedDate, { emitEvent: false }); 
       });
@@ -183,7 +203,7 @@ console.log('member',this.member?.leaderRoles?._id);
         next: (member: Member) => {
             this.close(member);
         },
-        error: (error) => {
+        error: (error: any) => {
             console.error(error);
         },
     });

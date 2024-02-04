@@ -1,12 +1,15 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { AppModule } from './app/app.module';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { environment } from '../environments/environement';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
+import { appConfig } from 'src/app/app.config';
+import { AppComponent } from 'src/app/app.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 if ( environment.production )
 {
     enableProdMode();
 }
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+    console.error(err),
+);

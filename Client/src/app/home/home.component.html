@@ -20,9 +20,9 @@
             </app-elder-pastoral>
         </mat-tab>
         <!--<mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="envois sms + email">
-            <app-elder-sms-mailer>
+            <app->
                 <ng-content></ng-content>
-            </app-elder-sms-mailer>
+            </app->
         </mat-tab>-->
         <mat-tab *ngIf="authService.hasRole('Société Secours') || authService.hasRole('Président De Branche')" label="Vue de la société de secours">
                 <app-societe>

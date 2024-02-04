@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TeamsService } from './services/elder-pastoral.service';
 import { Team, Teams } from './services/team.type';
 import { Observable, Subject, combineLatest, map, takeUntil} from 'rxjs';
@@ -8,11 +8,17 @@ import { FamilyService } from '../services/familes/family.service';
 import { Families, Family } from '../services/familes/family.type';
 import { User } from '../user/service/user.types';
 import { UserService } from '../user/service/user.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-elder-pastoral',
   templateUrl: './elder-pastoral.component.html',
-  styleUrls: ['./elder-pastoral.component.css']
+  styleUrls: ['./elder-pastoral.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    DragDropModule,
+  ],
 })
 export class ElderPastoralComponent implements OnInit {
   pretriseMembers: any[] = [];
