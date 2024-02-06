@@ -26,6 +26,7 @@
     "@auth0/angular-jwt": "^5.2.0",
     "autoprefixer": "^10.4.17",
     "globby": "^14.0.0",
+    "izitoast": "^1.4.0",
     "moment": "^2.30.1",
     "postcss": "^8.4.33",
     "postcss-import": "^16.0.0",

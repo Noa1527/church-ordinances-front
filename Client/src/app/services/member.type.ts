@@ -33,7 +33,7 @@ export interface Member {
     phone?: string;
     comments?: string[];
     leaderRoles?: Role;
-    _ordinance?: Ordinance;
+    ordinance?: Ordinance;
     _blessing?: Blessing;
     gender?: GenderType
     regions?: Regions;

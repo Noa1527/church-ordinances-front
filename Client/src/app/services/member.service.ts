@@ -109,6 +109,7 @@ export class MemberService {
     // }
     
     public update(id: string, member: Member): Observable<Member> {
+        console.log('member', member);
         return this.members$.pipe(
             take(1),
             switchMap((members: Members | null) =>

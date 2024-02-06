@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/izitoast/dist/css/iziToast.min.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
             ],
