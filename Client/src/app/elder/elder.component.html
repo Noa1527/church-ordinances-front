@@ -5,9 +5,7 @@
         <ng-container matColumnDef="firstName">
           <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
           <mat-cell *matCellDef="let member"> 
-            <a (click)="createOrEditAgency(member)">
               {{member.firstName}} 
-            </a> 
           </mat-cell>
         </ng-container>
             
@@ -101,7 +99,12 @@
 
   
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <mat-row 
+          *matRowDef="let row; columns: displayedColumns;" 
+          [ngClass]="{'red-row': getOrdinanceColor(row) === 'red'}" 
+          (click)="createOrEditAgency(row)"
+        >
+        </mat-row>
 
     </mat-table>
 </div>

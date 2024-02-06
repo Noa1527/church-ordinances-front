@@ -111,7 +111,6 @@ export class MemberDialogComponent implements OnInit{
       transitionOut: 'flipOutX',
       position: 'topRight',
     });
-    iziToast.info({ message: 'Bienvenue dans le formulaire de membre' });
     console.log('member',this.member);
 
     this.currentRole = this.member?.leaderRoles?.roles || '';

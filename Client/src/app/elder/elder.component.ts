@@ -73,6 +73,7 @@ export class ElderComponent implements OnInit, OnDestroy {
     this.memberService.leaders$.pipe(takeUntil(this._unsubscribeAll),
       filter((members: Members | null): members is Members => members !== null),
     ).subscribe((members: Members) => {
+      console.log('members', members);
       this.member = new MatTableDataSource(members);
     });
     
@@ -83,6 +84,14 @@ export class ElderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
+  }
+
+  // si le membre a 18 ans ou plus, et quil na pas la pretrise, il doit etre affiché en rouge
+  public getOrdinanceColor(member: Member): string {
+    if (member?.birthDate && member?.ordinance?.PriestHood === false && this.getAge(member.birthDate) >= 18) {
+      return 'red';
+    }
+    return '';
   }
 
   getAge(birthDate: Date): number {

@@ -76,12 +76,14 @@ export class BpComponent implements OnInit, OnDestroy {
     this.memberService.allMembers$.pipe(takeUntil(this._unsubscribeAll),
       filter((members: Members | null): members is Members => members !== null),
     ).subscribe((members: Members) => {
+      console.log('members',members);
+      
       this.member = new MatTableDataSource(members);
     });
   
     this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
   
-    console.log('coucou',this.user$);
+    // console.log('coucou',this.user$);
     console.log('coucou',this.member);
   }
 
