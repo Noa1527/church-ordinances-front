@@ -148,4 +148,24 @@ export class MemberService {
             ),
         );
     }
+
+    public sendAnEmail(): Observable<any> {
+        console.log('sendAnEmail');
+        
+        return this.http.get<any>('/api/member/resendMail').pipe(
+            tap((response: any) => {
+                console.log('response', response);
+            }),
+        );
+    }
+
+    public sendAnEmailLesson(): Observable<any> {
+        console.log('sendAnEmail');
+        
+        return this.http.get<any>('/api/member/resendMailLesson').pipe(
+            tap((response: any) => {
+                console.log('response', response);
+            }),
+        );
+    }
 }
