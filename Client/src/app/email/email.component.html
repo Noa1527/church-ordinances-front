@@ -1,0 +1,100 @@
+<div class="app-email">
+
+    <form [formGroup]="mailForm">
+        <mat-form-field>
+            <mat-label>L'équipe</mat-label>
+            <input matInput placeholder="Équipe" formControlName="team" name="team" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Email" formControlName="email" name="email" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Date</mat-label>
+            <input matInput placeholder="Date" formControlName="date" name="date" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Heur</mat-label>
+            <input matInput placeholder="Heur" formControlName="heur" name="heur" required>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>L'url</mat-label>
+            <input matInput placeholder="Url" formControlName="url" name="url" required>
+        </mat-form-field>
+
+
+       <!-- <mat-form-field>
+            <mat-label>choisiser des membres</mat-label>
+            <input matInput type="text" placeholder="Search topic" [matAutocomplete]="topicAutocomplete" formControlName="caption_type"/>
+            <mat-autocomplete #topicAutocomplete="matAutocomplete" >
+                <mat-option *ngFor="let option of filteredCaptionType | async" [value]="option.value">{{ option.name }}</mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="articleForm.get('caption_type')?.hasError('required')">
+                Caption type is required
+            </mat-error>
+        </mat-form-field>-->
+        <mat-form-field class="example-full-width">
+            <mat-label>Fruits</mat-label>
+            <mat-chip-grid #chipList aria-label="Fruit selection">
+              <mat-chip *ngFor="let member of selectedMembers" [removable]="true" (removed)="remove(member)">
+                {{member.firstName + ' ' + member.lastName}}
+                <mat-icon matChipRemove>cancel</mat-icon>
+              </mat-chip>
+              <input #memberInput placeholder="ajouter un membre..."
+                     [matAutocomplete]="auto"
+                     [matChipInputFor]="chipList"
+                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                     [matChipInputAddOnBlur]="true"
+                     (matChipInputTokenEnd)="add($event)">
+            </mat-chip-grid>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let member of filteredMembers | async" [value]="member">
+                {{member.firstName + ' ' + member.lastName}}
+              </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+         <!-- <mat-form-field class="example-chip-list">
+            <mat-label>Favorite Fruits</mat-label>
+            <mat-chip-grid #chipGrid aria-label="Fruit selection">
+              @for (fruit of fruits; track fruit) {
+                <mat-chip-row (removed)="remove(fruit)">
+                  {{fruit}}
+                  <button matChipRemove [attr.aria-label]="'remove ' + fruit">
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip-row>
+              }
+            </mat-chip-grid>
+            <input placeholder="New Fruit..." #fruitInput [formControl]="fruitCtrl"
+              [matChipInputFor]="chipGrid" [matAutocomplete]="auto"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"/>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              @for (fruit of filteredFruits | async; track fruit) {
+                <mat-option [value]="fruit">{{fruit}}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>-->
+
+    </form>
+
+
+    <button color="primary" mat-button (click)="sendAnEmail()">
+        <mat-icon>email</mat-icon>
+        <span>Envoyer un email</span>
+    </button>
+    
+    <button
+        color="secondary" 
+        mat-button 
+        (click)="sendAnEmailLesson()"
+    >
+        <mat-icon>email</mat-icon>
+        Envoyer un email leçon
+    </button>
+</div>
