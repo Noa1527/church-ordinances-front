@@ -84,7 +84,7 @@ export class EmailComponent implements OnInit, OnDestroy{
       date: new FormControl('', [Validators.required]),
       heur: new FormControl('', [Validators.required]),
       url: new FormControl('', [Validators.required]),
-      member: new FormControl('', [Validators.required]),
+      member: new FormControl(this.selectedMembers, [Validators.required]),
     });
 
     this.filteredMembers = this.memberCtrl.valueChanges.pipe(
@@ -136,12 +136,13 @@ console.log('value', value);
     console.log('members ->', this.members$);
     console.log('members ->', this.members);
     console.log('Selected members ->', this.selectedMembers);
+    console.log('mailForm ->', this.mailForm.value);
     // console.log('sendAnEmail');
     
-    // this._memberService.sendAnEmail().subscribe({
-    //     next: (response) => console.log('Email sent successfully', response),
-    //     error: (error) => console.error('Error sending email', error)
-    // });
+    this._memberService.sendAnEmail(this.mailForm.value).subscribe({
+        next: (response) => console.log('Email sent successfully', response),
+        error: (error) => console.error('Error sending email', error)
+    });
   }
 
   sendAnEmailLesson() {

@@ -1,5 +1,5 @@
 <div class="mt-30 h-full w-full">
-    <mat-tab-group class="h-400 min-h-400 max-h-400 bg-gray-100 mt-30 pt-10 pl-10">
+    <mat-tab-group class="bg-gray-100 mt-30 xl:pt-10 xl:pl-10 xl:pr-10" >
         <!-- je metrais des restriction administratif en fonction de son role pour chaque mat-tab -->
         <mat-tab *ngIf="authService.hasRole('Président De Branche')" label="Vue Globale (présidence de branche)">
             <div class="bg-white rounded-2xl">

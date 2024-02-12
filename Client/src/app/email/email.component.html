@@ -1,30 +1,37 @@
-<div class="app-email">
+<div class="app-email w-full">
 
-    <form [formGroup]="mailForm">
-        <mat-form-field>
+    <form class="" [formGroup]="mailForm">
+      <div class="flex justify-around w-full">
+
+        <mat-form-field class="w-2/5">
             <mat-label>L'équipe</mat-label>
             <input matInput placeholder="Équipe" formControlName="team" name="team" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-2/5">
             <mat-label>Email</mat-label>
             <input matInput placeholder="Email" formControlName="email" name="email" required>
         </mat-form-field>
 
-        <mat-form-field>
+      </div>
+      <div class="flex justify-around w-full">
+        <mat-form-field class="w-2/5">
             <mat-label>Date</mat-label>
             <input matInput placeholder="Date" formControlName="date" name="date" required>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="w-2/5">
             <mat-label>Heur</mat-label>
             <input matInput placeholder="Heur" formControlName="heur" name="heur" required>
         </mat-form-field>
+      </div>
 
-        <mat-form-field>
+      <div class="w-full flex justify-center">
+        <mat-form-field class="url-field">
             <mat-label>L'url</mat-label>
             <input matInput placeholder="Url" formControlName="url" name="url" required>
         </mat-form-field>
+      </div>
 
 
        <!-- <mat-form-field>
@@ -37,26 +44,29 @@
                 Caption type is required
             </mat-error>
         </mat-form-field>-->
-        <mat-form-field class="example-full-width">
-            <mat-label>Fruits</mat-label>
-            <mat-chip-grid #chipList aria-label="Fruit selection">
-              <mat-chip *ngFor="let member of selectedMembers" [removable]="true" (removed)="remove(member)">
-                {{member.firstName + ' ' + member.lastName}}
-                <mat-icon matChipRemove>cancel</mat-icon>
-              </mat-chip>
-              <input #memberInput placeholder="ajouter un membre..."
-                     [matAutocomplete]="auto"
-                     [matChipInputFor]="chipList"
-                     [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                     [matChipInputAddOnBlur]="true"
-                     (matChipInputTokenEnd)="add($event)">
-            </mat-chip-grid>
-            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-              <mat-option *ngFor="let member of filteredMembers | async" [value]="member">
-                {{member.firstName + ' ' + member.lastName}}
-              </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+        <div class="w-full flex justify-center">
+
+          <mat-form-field class="member-picker">
+              <mat-label>Membres</mat-label>
+              <mat-chip-grid #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let member of selectedMembers" [removable]="true" (removed)="remove(member)">
+                  {{member.firstName + ' ' + member.lastName}}
+                  <mat-icon matChipRemove>cancel</mat-icon>
+                </mat-chip>
+                <input #memberInput placeholder="ajouter un membre..."
+                       [matAutocomplete]="auto"
+                       [matChipInputFor]="chipList"
+                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                       [matChipInputAddOnBlur]="true"
+                       (matChipInputTokenEnd)="add($event)">
+              </mat-chip-grid>
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                <mat-option *ngFor="let member of filteredMembers | async" [value]="member">
+                  {{member.firstName + ' ' + member.lastName}}
+                </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+        </div>
 
          <!-- <mat-form-field class="example-chip-list">
             <mat-label>Favorite Fruits</mat-label>
