@@ -78,13 +78,13 @@
                     class="w-full mt-6 bg-cyan-500 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                     mat-flat-button
                     [color]="'primary'"
-                    [disabled]="loginForm.disabled"
+                    [disabled]="spine"
                     (click)="login()">
-                    <span *ngIf="!loginForm.disabled">
+                    <span *ngIf="!spine">
                         Se connecter
                     </span>
                     <mat-progress-spinner
-                        *ngIf="loginForm.disabled"
+                        *ngIf="spine"
                         [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
