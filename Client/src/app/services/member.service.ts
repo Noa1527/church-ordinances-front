@@ -5,6 +5,14 @@ import { switchMap, take, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Member, Members, Regions } from './member.type';
 
+type emailInformations = {
+    team: string;
+    email: string;
+    date: string;
+    heur: string;
+    url: string;
+    member: Member;
+};
 @Injectable({
     providedIn: 'root',
 })
@@ -148,10 +156,10 @@ export class MemberService {
         );
     }
 
-    public sendAnEmail(): Observable<any> {
+    public sendAnEmail(form: emailInformations): Observable<any> {
         console.log('sendAnEmail');
         
-        return this.http.get<any>('/api/member/resendMail').pipe(
+        return this.http.post<any>('/api/member/resendMail', form).pipe(
             tap((response: any) => {
                 console.log('response', response);
             }),
