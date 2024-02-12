@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
 
   loginForm!: FormGroup;
   showAlert = false;
+  public spine = false;
   alert = {
     type: '',
     message: '',
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+    this.spine = true;
     if (this.loginForm.invalid) {
       this.showAlert = true;
       this.alert = {
@@ -79,6 +81,7 @@ export class LoginComponent implements OnInit {
     .pipe(
       tap(response => {
         // redirect user to home page or another page
+        this.spine = false;
         this.router.navigate(['/home']);
       }),
       catchError(error => {
