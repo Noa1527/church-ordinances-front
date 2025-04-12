@@ -1,12 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MemberService } from '../services/member.service';
 import { Observable, Subject, filter, takeUntil } from 'rxjs';
-import { Member, Members } from '../services/member.type';
-import { MemberDialogComponent } from '../components/member-dialog/member-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { UserService } from '../user/service/user.service';
-import { User } from '../user/service/user.types';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -14,12 +9,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Route, Router } from '@angular/router';
+import { Member, Members } from 'src/app/services/member.type';
+import { User } from 'src/app/user/service/user.types';
+import { UserService } from 'src/app/user/service/user.service';
+import { MemberService } from 'src/app/services/member.service';
+import { Families, Family } from 'src/app/services/familes/family.type';
+import { FamilyService } from 'src/app/services/familes/family.service';
 
 @Component({
-  selector: 'app-elder',
-  templateUrl: './elder.component.html',
-  styleUrls: ['./elder.component.css'],
+  selector: 'app-familly',
+  templateUrl: './familly.component.html',
+  styleUrls: ['./familly.component.css'],
   standalone: true,
   imports: [
     CommonModule,
@@ -33,35 +33,27 @@ import { Route, Router } from '@angular/router';
     MatIconModule
   ],
 })
-export class ElderComponent implements OnInit, OnDestroy {
+export class FamillyComponent implements OnInit, OnDestroy {
+
   private _unsubscribeAll: Subject<any> = new Subject<any>();
-  public member: MatTableDataSource<Member>;
+  public family!: MatTableDataSource<Family>;
   public user!: User;
   public user$!: Observable<User | null>;
   
   displayedColumns: string[] = [
-    'firstName', 
-    'lastName', 
-    'email', 
-    'age', 
-    'gender', 
-    'phone', 
-    'ordinance.Baptism', 
-    'ordinance.PriestHood', 
-    'ordinance.Initiatory', 
-    'ordinance.Endowment', 
-    'ordinance.Sealing', 
-    'blessing.is_got', 
-    // 'comments' 
+    'name',
+    'region',
+    'delete'
+    // 'code'
+    
   ];
 
   constructor(
-    private memberService: MemberService,
+    private familyService: FamilyService,
     private userService: UserService,
     private dialog: MatDialog,
-    private router: Router
   ) { 
-    this.member = new MatTableDataSource();
+    // this.families = new MatTableDataSource();
   }
 
   ngOnInit(): void {
@@ -70,17 +62,16 @@ export class ElderComponent implements OnInit, OnDestroy {
       console.log('user', user);
       this.user = user;
   
-      if (this.user && this.user.regions) {
-        console.log('this.user.regions',this.user.regions);
-        this.memberService.findLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
-      }
+    //   if (this.user && this.user.regions) {
+    //     console.log('this.user.regions',this.user.regions);
+    //     this.familyService.findLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    //   }
     });
 
-    this.memberService.leaders$.pipe(takeUntil(this._unsubscribeAll),
-      filter((members: Members | null): members is Members => members !== null),
-    ).subscribe((members: Members) => {
-      console.log('members', members);
-      this.member = new MatTableDataSource(members);
+    this.familyService.families$.pipe(takeUntil(this._unsubscribeAll),
+      filter((families: Families | null): families is Families => families !== null),
+    ).subscribe((families: Families) => {
+      this.family = new MatTableDataSource(families);
     });
     
     this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
@@ -90,14 +81,6 @@ export class ElderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._unsubscribeAll.next(null);
     this._unsubscribeAll.complete();
-  }
-
-  // si le membre a 18 ans ou plus, et quil na pas la pretrise, il doit etre affiché en rouge
-  public getOrdinanceColor(member: Member): string {
-    if (member?.birthDate && member?.ordinance?.PriestHood === false && this.getAge(member.birthDate) >= 18) {
-      return 'red';
-    }
-    return '';
   }
 
   getAge(birthDate: Date): number {
@@ -131,19 +114,24 @@ export class ElderComponent implements OnInit, OnDestroy {
   // }
 
   public createOrEditAgency(member?: Member): void {
-    const ref = this.dialog.open(MemberDialogComponent, {
-        width: '100%',
-    });
+//     const ref = this.dialog.open(MemberDialogComponent, {
+//         width: '100%',
+//     });
     
-    if (member) {
-      ref.componentInstance.member = member;
-    }
+//     if (member) {
+//       ref.componentInstance.member = member;
+//     }
   }
 
   public famillyPage(){
     // TODO: ajouter le lien ver la nouvelle page pour les familles
-    console.log('this.user.regions',this.user.regions);
+  }
+  public deleteFamily(family: Family): void {
+    console.log(family, 'family');
     
-    this.router.navigate([`/family`, this.user.regions]);
+    if (family && family._id && family.region) {
+      
+      this.familyService.deleteFamily(family._id, family.region).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    }
   }
 }

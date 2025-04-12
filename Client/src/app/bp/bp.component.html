@@ -100,11 +100,20 @@
         </ng-container>
 
          <!-- comments -->
-         <ng-container matColumnDef="comments">
+        <!--<ng-container matColumnDef="comments">
           <mat-header-cell *matHeaderCellDef> commentaires </mat-header-cell>
           <mat-cell *matCellDef="let member">
               <mat-checkbox [checked]="member.comments" disabled></mat-checkbox>  
           </mat-cell>
+        </ng-container>-->
+
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef> Suprimé </mat-header-cell>
+          <mat-cell *matCellDef="let member">
+              <button (click)="deleteMember(member)" mat-button>
+                  <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
         </ng-container>
 
   

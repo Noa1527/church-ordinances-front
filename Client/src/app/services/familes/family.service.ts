@@ -48,4 +48,12 @@ export class FamilyService {
           })
         );
     }
+
+    public deleteFamily(id: string, region: Regions): Observable<any> {
+        return this.http.delete<any>(`/api/family/${id}`).pipe(
+            tap((res: any)=> {
+                this.findAllFamily(region).subscribe()
+            })
+        )
+    }
 }

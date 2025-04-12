@@ -1,0 +1,57 @@
+
+<div>
+  
+    <mat-table [dataSource]="family" class="mat-elevation-z8">
+
+        <!-- First Name Column -->
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+          <mat-cell *matCellDef="let family"> 
+            <a (click)="createOrEditAgency(family)">
+              {{family.firstName}} 
+            </a> 
+          </mat-cell>
+        </ng-container>
+            
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let family"> {{family.name}} </mat-cell>
+        </ng-container>
+    
+        <!-- Email Column -->
+        <ng-container matColumnDef="region">
+          <mat-header-cell *matHeaderCellDef> Region </mat-header-cell>
+          <mat-cell *matCellDef="let family"> 
+            <span title="{{family.region}}">{{family.region}}</span> 
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <mat-header-cell *matHeaderCellDef> Suprimé </mat-header-cell>
+          <mat-cell *matCellDef="let family">
+              <button (click)="deleteFamily(family)" mat-button>
+                  <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
+  
+       <!-- Age Column -->
+       <!-- <ng-container matColumnDef="code">
+          <mat-header-cell *matHeaderCellDef> Code </mat-header-cell>
+          <mat-cell *matCellDef="let family"> {{family.code}} </mat-cell>
+        </ng-container> -->
+
+         <!-- blessing -->
+         <!--<ng-container matColumnDef="blessing.is_got">
+            <mat-header-cell *matHeaderCellDef> Bénediction Patriarcale </mat-header-cell>
+            <mat-cell *matCellDef="let family">
+                <mat-checkbox [checked]="family.blessing.is_got" disabled></mat-checkbox>  
+            </mat-cell>
+        </ng-container>-->
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+</div>

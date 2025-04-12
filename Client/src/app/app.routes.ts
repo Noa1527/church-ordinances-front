@@ -20,6 +20,11 @@ export const appRoutes: Route[] = [
         canActivate: [AuthGuard],
     },
     {
+        path: 'family/:region',
+        loadChildren: () => import('src/app/familly/familly.routes'),
+        canActivate: [AuthGuard],
+    },
+    {
         path: 'logout',
         loadChildren: () => import('src/app/auth/logout/logout.routes'),
         canActivate: [AuthGuard],

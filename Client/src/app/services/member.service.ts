@@ -176,4 +176,12 @@ export class MemberService {
             }),
         );
     }
+
+    public deleteMember(id: string, region: Regions): Observable<any> {
+        return this.http.delete<any>(`/api/member/${id}`).pipe(
+            tap((res: any)=> {
+                this.getAllMembers(region).subscribe()
+            })
+        )
+    }
 }

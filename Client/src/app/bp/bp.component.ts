@@ -12,6 +12,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-bp',
@@ -27,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     MatDialogModule,
     MemberDialogComponent,
+    MatIconModule
   ],
 })
 export class BpComponent implements OnInit, OnDestroy {
@@ -48,7 +50,8 @@ export class BpComponent implements OnInit, OnDestroy {
     'ordinance.Initiatory', 
     'ordinance.Endowment', 
     'ordinance.Sealing', 
-    'blessing.is_got', 
+    'blessing.is_got',
+    'delete'
     // 'comments' 
   ];
 
@@ -130,6 +133,15 @@ export class BpComponent implements OnInit, OnDestroy {
 
     if (member) {
       ref.componentInstance.member = member;
+    }
+  }
+
+  public deleteMember(member: Member): void {
+    console.log(member, 'member');
+    
+    if (member && member._id && member.regions) {
+      
+      this.memberService.deleteMember(member._id, member.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
     }
   }
 }
