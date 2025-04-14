@@ -9,10 +9,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Member, Members } from 'src/app/services/member.type';
+import { Member } from 'src/app/services/member.type';
 import { User } from 'src/app/user/service/user.types';
 import { UserService } from 'src/app/user/service/user.service';
-import { MemberService } from 'src/app/services/member.service';
 import { Families, Family } from 'src/app/services/familes/family.type';
 import { FamilyService } from 'src/app/services/familes/family.service';
 
@@ -39,12 +38,12 @@ export class FamillyComponent implements OnInit, OnDestroy {
   public family!: MatTableDataSource<Family>;
   public user!: User;
   public user$!: Observable<User | null>;
+  public families$!: Observable<Families | null>;
   
   displayedColumns: string[] = [
     'name',
     'region',
     'delete'
-    // 'code'
     
   ];
 
@@ -52,30 +51,28 @@ export class FamillyComponent implements OnInit, OnDestroy {
     private familyService: FamilyService,
     private userService: UserService,
     private dialog: MatDialog,
-  ) { 
-    // this.families = new MatTableDataSource();
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.families$ = this.familyService.families$;
+    this.user$ = this.userService.user$;
 
-    this.userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
+    this.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User | null) => {
       console.log('user', user);
-      this.user = user;
-  
-    //   if (this.user && this.user.regions) {
-    //     console.log('this.user.regions',this.user.regions);
-    //     this.familyService.findLeaders(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
-    //   }
+      if (user !== null) {
+        
+        this.user = user;
+      }
     });
 
     this.familyService.families$.pipe(takeUntil(this._unsubscribeAll),
       filter((families: Families | null): families is Families => families !== null),
     ).subscribe((families: Families) => {
+      console.log('families', families);
+      
       this.family = new MatTableDataSource(families);
     });
     
-    this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
-
   }
 
   ngOnDestroy(): void {
@@ -123,14 +120,10 @@ export class FamillyComponent implements OnInit, OnDestroy {
 //     }
   }
 
-  public famillyPage(){
-    // TODO: ajouter le lien ver la nouvelle page pour les familles
-  }
   public deleteFamily(family: Family): void {
     console.log(family, 'family');
     
     if (family && family._id && family.region) {
-      
       this.familyService.deleteFamily(family._id, family.region).pipe(takeUntil(this._unsubscribeAll)).subscribe();
     }
   }

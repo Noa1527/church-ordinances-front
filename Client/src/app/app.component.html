@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <button mat-button routerLink="/login" *ngIf="!authService.isLoggedIn()">Connexion</button>
   <button mat-button routerLink="/register" *ngIf="!authService.isLoggedIn()">Inscription</button>
-  <button mat-button routerLink="/profile" *ngIf="authService.isLoggedIn()">Profile</button>
+  <button mat-button routerLink="/profile" *ngIf="authService.isLoggedIn()">Dashboard</button>
   <button mat-button routerLink="/logout" *ngIf="authService.isLoggedIn()">Déconnexion</button>
 </mat-toolbar>
 
