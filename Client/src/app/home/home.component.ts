@@ -9,7 +9,7 @@ import { JeuneFillesComponent } from '../jeune-filles/jeune-filles.component';
 import { JeuneGensComponent } from '../jeune-gens/jeune-gens.component';
 import { PrimaireComponent } from '../primaire/primaire.component';
 import { SocieteComponent } from '../societe/societe.component';
-import { EmailComponent } from '../email/email.component';
+import { EmailComponent } from 'src/app/email/email.component';
 
 @Component({
   selector: 'app-home',

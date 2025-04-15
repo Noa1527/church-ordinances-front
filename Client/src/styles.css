@@ -590,6 +590,10 @@ video {
   grid-column: 1 / -1;
 }
 
+.m-4 {
+  margin: 1rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -913,12 +917,18 @@ video {
     padding-left: 7rem;
     padding-right: 7rem;
   }
+}
 
-  .lg\:pl-10 {
+@media (min-width: 1280px) {
+  .xl\:pl-10 {
     padding-left: 2.5rem;
   }
 
-  .lg\:pt-10 {
+  .xl\:pr-10 {
+    padding-right: 2.5rem;
+  }
+
+  .xl\:pt-10 {
     padding-top: 2.5rem;
   }
 }
