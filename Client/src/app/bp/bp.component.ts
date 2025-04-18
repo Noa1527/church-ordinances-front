@@ -36,6 +36,7 @@ export class BpComponent implements OnInit, OnDestroy {
   public member: MatTableDataSource<Member>;
   public user!: User;
   public user$!: Observable<User | null>;
+  public allMembers$!: Observable<Members | null>;
   
   displayedColumns: string[] = [
     'firstName', 
@@ -65,18 +66,18 @@ export class BpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('coucou');
-    
-    this.userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-      console.log('user', user);
-      this.user = user;
+    this.allMembers$ = this.memberService.allMembers$;
+    // this.userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
+    //   console.log('user', user);
+    //   this.user = user;
   
-      if (this.user && this.user.regions) {
-        console.log('this.user.regions',this.user.regions);
-        this.memberService.getAllMembers(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
-      }
-    });
+    //   if (this.user && this.user.regions) {
+    //     console.log('this.user.regions',this.user.regions);
+    //     this.memberService.getAllMembers(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    //   }
+    // });
   
-    this.memberService.allMembers$.pipe(takeUntil(this._unsubscribeAll),
+    this.allMembers$.pipe(takeUntil(this._unsubscribeAll),
       filter((members: Members | null): members is Members => members !== null),
     ).subscribe((members: Members) => {
       console.log('members',members);
@@ -84,7 +85,7 @@ export class BpComponent implements OnInit, OnDestroy {
       this.member = new MatTableDataSource(members);
     });
   
-    this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
+    // this.userService.get().pipe(takeUntil(this._unsubscribeAll)).subscribe();
   
     // console.log('coucou',this.user$);
     console.log('coucou',this.member);

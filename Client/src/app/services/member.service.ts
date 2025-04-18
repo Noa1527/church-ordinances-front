@@ -79,7 +79,10 @@ export class MemberService {
     public getAllMembers(region: Regions): Observable<Members> {
         return this.http.get<Members>('/api/member', { params: { region } }).pipe(
           tap((members: any) => {
+            console.log('members get all members', members);
+            
             this._allMembers.next(members);
+            this._members.next(members);
           })
         );
     }
@@ -117,11 +120,11 @@ export class MemberService {
     // }
     
     public update(id: string, member: Member): Observable<Member> {
-        console.log('member', member);
+        console.log('member update', member);
         return this.members$.pipe(
             take(1),
             switchMap((members: Members | null) =>
-                this.http.put<Member>(`/api/member/${id}`, member).pipe(
+                this.http.patch<Member>(`/api/member/${id}`, member).pipe(
                     tap((response: Member) => {
                         if (members) {
                             const index = members.findIndex((o) => o._id === response._id);

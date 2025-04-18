@@ -15,3 +15,29 @@ export const sistersResolver: ResolveFn<Members> = () => {
     return familyService.findWomenLeaders(region);
 };
 
+export const MembersResolver: ResolveFn<Members> = () => {
+    const authService = inject(AuthService);
+    const memberService = inject(MemberService);
+  
+    const user = authService.curentUser();
+    const region = user?.regions;
+    console.log('region', region);
+    
+    return memberService.getAllMembers(region);
+};
+
+export const AllMembersResolver: ResolveFn<Members> = () => {
+    const authService = inject(AuthService);
+    const memberService = inject(MemberService);
+  
+    const user = authService.curentUser();
+    const region = user?.regions;
+    console.log('region', region);
+    
+    return memberService.getAllMembers(region);
+};
+
+
+
+
+

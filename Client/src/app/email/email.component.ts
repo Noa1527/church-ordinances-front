@@ -15,6 +15,7 @@ import { Member, Members } from '../services/member.type';
 import { User } from '../user/service/user.types';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-email',
@@ -32,6 +33,7 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
     ReactiveFormsModule,
     MatAutocompleteModule,
     MatChipsModule,
+    MatSnackBarModule
   ],
 })
 export class EmailComponent implements OnInit, OnDestroy{
@@ -48,7 +50,7 @@ export class EmailComponent implements OnInit, OnDestroy{
   public separatorKeysCodes: number[] = [ENTER, COMMA];
   
   public members!: Members | null;
-  public members$!: Observable<Member[]>;
+  public members$!: Observable<Member[] | null>;
   public memberCtrl = new FormControl();
   public filteredMembers!: Observable<Member[]>;
   public selectedMembers: Member[] = [];
@@ -56,24 +58,21 @@ export class EmailComponent implements OnInit, OnDestroy{
   constructor(
     private _memberService: MemberService,
     private _userService: UserService,
+    private _snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {
     
-    // this.members$ = this._memberService.members$;
-    this._memberService.members$.pipe(takeUntil(this._unsubscribeAll)).subscribe((members: Members | null) => {
+    this.members$ = this._memberService.members$;
+    this.members$.subscribe((members: Members | null) => {
       if (members !== null) {
         this.members = members;
-      }
-    });
-    
-   
-    this._userService.user$.pipe(takeUntil(this._unsubscribeAll)).subscribe((user: User) => {
-      this.user = user;
-    
-      if (this.user && this.user.regions) {
-        this._memberService.getAllMembers(this.user.regions).pipe(takeUntil(this._unsubscribeAll)).subscribe((members: Members | null) => {
-          this.members = members;
+
+      } else {
+        this._snackBar.open('Aucun membre trouvé', 'Fermer', {
+          duration: 5000, // 3 secondes
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
         });
       }
     });
@@ -100,10 +99,10 @@ export class EmailComponent implements OnInit, OnDestroy{
   }
 
   add(event: MatChipInputEvent): void {
-console.log('event', event);
+    console.log('event', event);
 
     const value = (event.value || '').trim();
-console.log('value', value);
+    console.log('value', value);
 
     // Add our fruit
     if (value) {
@@ -140,8 +139,22 @@ console.log('value', value);
     // console.log('sendAnEmail');
     
     this._memberService.sendAnEmail(this.mailForm.value).subscribe({
-        next: (response) => console.log('Email sent successfully', response),
-        error: (error) => console.error('Error sending email', error)
+        next: (response) => {
+          console.log('Email sent successfully', response)
+          this._snackBar.open('Email envoyé', 'Fermer', {
+            duration: 5000, // 5 secondes
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        },
+        error: (error) => {
+          console.error('Error sending email', error)
+          this._snackBar.open('Erreur lors de l\'envoi de l\'email', 'Fermer', {
+            duration: 5000, // 5 secondes
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+        }
     });
   }
 
