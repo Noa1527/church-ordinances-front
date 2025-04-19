@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth/service/auth.service';
+import { AuthService } from 'src/app/auth/service/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
-import { BpComponent } from '../bp/bp.component';
-import { ElderComponent } from '../elder/elder.component';
-import { ElderPastoralComponent } from '../elder-pastoral/elder-pastoral.component';
-import { JeuneFillesComponent } from '../jeune-filles/jeune-filles.component';
-import { JeuneGensComponent } from '../jeune-gens/jeune-gens.component';
-import { PrimaireComponent } from '../primaire/primaire.component';
-import { SocieteComponent } from '../societe/societe.component';
+import { BpComponent } from 'src/app/bp/bp.component';
+import { ElderComponent } from 'src/app/elder/elder.component';
+import { ElderPastoralComponent } from 'src/app/elder-pastoral/elder-pastoral.component';
+import { JeuneFillesComponent } from 'src/app/jeune-filles/jeune-filles.component';
+import { JeuneGensComponent } from 'src/app/jeune-gens/jeune-gens.component';
+import { PrimaireComponent } from 'src/app/primaire/primaire.component';
+import { SocieteComponent } from 'src/app/societe/societe.component';
 import { EmailComponent } from 'src/app/email/email.component';
 
 @Component({
@@ -27,7 +27,6 @@ import { EmailComponent } from 'src/app/email/email.component';
     PrimaireComponent,
     SocieteComponent,
     EmailComponent,
-
   ],
 })
 export class HomeComponent {

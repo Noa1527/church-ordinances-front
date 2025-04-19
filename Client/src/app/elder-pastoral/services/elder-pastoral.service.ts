@@ -65,6 +65,8 @@ export class TeamsService {
     console.log('seq', seq);
     console.log('team', team);
     console.log('user', user.user[0].region);
+    console.log('user', user.user[0].regions);
+    console.log('user', user);
     
     if (user && user.user[0].regions === 'Cholet' || user.user[0].region === 'Cholet') {
 

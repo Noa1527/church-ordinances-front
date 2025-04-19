@@ -1,12 +1,10 @@
 <div class="mt-30 h-full w-full">
     <mat-tab-group class="bg-gray-100 mt-30 xl:pt-10 xl:pl-10 xl:pr-10" >
-        <!-- je metrais des restriction administratif en fonction de son role pour chaque mat-tab -->
         <mat-tab *ngIf="authService.hasRole('Président De Branche')" label="Vue Globale (présidence de branche)">
             <div class="bg-white rounded-2xl">
                 <app-bp>
                     <ng-content></ng-content>
                 </app-bp>
-                <!-- contenu du onglet -->
             </div>
         </mat-tab>
         <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="Vue de la présidence des anciens">
