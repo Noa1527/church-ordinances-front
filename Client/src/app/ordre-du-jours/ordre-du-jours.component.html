@@ -1,0 +1,322 @@
+<dir class="w-full p-3">
+
+    <form [formGroup]="pdfForm" (ngSubmit)="submitForm()" >
+        <div class="w-full flex ">
+            <div class="w-full">
+    
+                <div class="w-full py-[5px] my-[5px]">
+                    <!--date du jours-->
+                    <mat-form-field>
+                        <mat-label>Choisissez une date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="dateOfTheDay">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <!--heure du debus et de fin -->
+                <div class="w-full  ">
+                    <div class="w-5/6 flex py-[5px] my-[5px]">
+                        <!--<label for="startTime">Heure de début :</label>-->
+                        <input class="p-4 my-4" id="startTime" [ngxTimepicker]="startPicker" placeholder="L'heure de début" formControlName="start" readonly>
+                        <ngx-material-timepicker #startPicker></ngx-material-timepicker>
+                    
+                        <!--<label for="endTime">Heure de fin :</label>-->
+                        <input class="p-4 m-4" id="endTime" [ngxTimepicker]="endPicker" placeholder="L'heure de fin" formControlName="end" readonly>
+                        <ngx-material-timepicker #endPicker></ngx-material-timepicker>
+                    </div>
+                </div>
+                   
+                <div class="w-full py-[5px] my-[5px]">
+                    <!--presider et diriger -->
+                    
+                    <div class="w-full py-[5px] my-[5px]">
+                        <mat-form-field 
+                            class="w-5/6"
+                            appearance="fill"
+                        >
+                            <mat-label>Présider par</mat-label>
+                
+                            <input 
+                                type="text"
+                                class="p-4 border border-black bg-white"
+                                placeholder="Présider par"
+                                matInput
+                                formControlName="preside"
+                                autocomplete="on"
+                                [matAutocomplete]="autoMemberPresideByList" 
+                                (input)="onMemberSpiritualThoughtsSelected($event)"
+                            />
+                            <mat-autocomplete 
+                                #autoMemberPresideByList="matAutocomplete" 
+                                [displayWith]="displayFnPresideByList"
+                                (optionSelected)="onMemberSpiritualThoughtsSelected($event)"
+                            >
+                                <mat-option 
+                                    *ngFor="let c of memberSpiritualThoughtsListFiltered" 
+                                    [value]="c"
+                                > 
+                                    {{ c.name }} 
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                    <div class="w-full py-[5px] my-[5px]">
+                        <mat-form-field 
+                            class="w-5/6"
+                            appearance="fill"
+                        >
+                            <mat-label>Diriger par</mat-label>
+                
+                            <input 
+                                type="text"
+                                class="p-4 border border-black bg-white"
+                                placeholder="Diriger par"
+                                matInput
+                                formControlName="dirige"
+                                autocomplete="on"
+                                [matAutocomplete]="autoMemberPresideByList" 
+                                (input)="onMemberSpiritualThoughtsSelected($event)"
+                            />
+                            <mat-autocomplete 
+                                #autoMemberPresideByList="matAutocomplete" 
+                                [displayWith]="displayFnPresideByList"
+                                (optionSelected)="onMemberSpiritualThoughtsSelected($event)"
+                            >
+                                <mat-option 
+                                    *ngFor="let c of memberSpiritualThoughtsListFiltered" 
+                                    [value]="c"
+                                > 
+                                    {{ c.name }} 
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>   
+            </div>
+            <div>
+                <div class="w-full py-[5px] my-[5px]">
+                    <mat-form-field 
+                        class="w-5/6"
+                        appearance="fill"
+                    >
+                        <mat-label>Section du manuel</mat-label>
+            
+                        <input 
+                            type="text"
+                            class="p-4 border border-black bg-white"
+                            placeholder="section du manuel"
+                            matInput
+                            formControlName="manuelGeneral"
+                        />
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="w-full">
+                <div class="w-full py-[5px] my-[5px]">
+                    <mat-form-field 
+                        class="w-5/6"
+                        appearance="fill"
+                    >
+                        <mat-label>Prière d'ouverture</mat-label>
+            
+                        <input 
+                            type="text"
+                            class="p-4 border border-black bg-white"
+                            placeholder="Prière d'ouverture"
+                            matInput
+                            formControlName="memberOpenPrayer"
+                            autocomplete="on"
+                            [matAutocomplete]="autoMemberOpenPrayerList" 
+                            (input)="onSelectedMemberOpenPrayerChanged($event)"
+                        />
+                        <mat-autocomplete 
+                            #autoMemberOpenPrayerList="matAutocomplete" 
+                            [displayWith]="displayFnOpenPayerList"
+                            (optionSelected)="onMemberOpenPrayerSelected($event)"
+                        >
+                            <mat-option 
+                                *ngFor="let c of memberOpenPrayerListFiltered" 
+                                [value]="c"
+                            > 
+                                {{ c.name }} 
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="w-full">
+
+                <div class="w-full flex py-[5px] my-[5px]">
+
+                    <mat-form-field 
+                        class="my-4 w-1/2"
+                        appearance="fill"
+                    >
+                        <mat-label>Pensé spirituel</mat-label>
+            
+                        <input 
+                            type="text"
+                            placeholder="Pensée spirituel" 
+                            matInput
+                            formControlName="memberSpiritualThoughts"
+                            autocomplete="on"
+                            [matAutocomplete]="autoMemberSpiritualThoughtsList" 
+                            (input)="onMemberSpiritualThoughtsSelected($event)"
+                        />
+                        <mat-autocomplete 
+                            #autoMemberSpiritualThoughtsList="matAutocomplete" 
+                            [displayWith]="displayFnSpiritualThoughtsList"
+                            (optionSelected)="onMemberSpiritualThoughtsSelected($event)"
+                        >
+                            <mat-option 
+                                *ngFor="let c of memberSpiritualThoughtsListFiltered" 
+                                [value]="c"
+                            > 
+                                {{ c.name }} 
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+        
+                    
+                    <div class="w-1/2 py-[5px] my-[5px]">
+                        <mat-form-field appearance="fill" class="my-4 mx-4">
+                            <mat-label >Sujet de la Pensée</mat-label>
+                            <input matInput  placeholder="Sujet de la pensée" formControlName="subjectSpiritualThoughts" type="text">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div>
+                    <mat-form-field 
+                    class="my-4 w-1/2"
+                    appearance="fill"
+                >
+                    <mat-label>Lecture du compte rendus</mat-label>
+        
+                    <input 
+                        type="text"
+                        placeholder="compte rendu" 
+                        matInput
+                        formControlName="report"
+                        autocomplete="on"
+                        [matAutocomplete]="autoMemberSpiritualThoughtsList" 
+                        (input)="onMemberSpiritualThoughtsSelected($event)"
+                        />
+                    <mat-autocomplete 
+                        #autoMemberSpiritualThoughtsList="matAutocomplete" 
+                        [displayWith]="displayFnSpiritualThoughtsList"
+                        (optionSelected)="onMemberSpiritualThoughtsSelected($event)"
+                    >
+                        <mat-option 
+                            *ngFor="let c of memberSpiritualThoughtsListFiltered" 
+                            [value]="c"
+                        > 
+                            {{ c.name }} 
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                </div>
+
+
+                <div class="w-full py-[5px] my-[5px]">
+                    <h2>SUJET ORDRE DU JOURS</h2>
+
+                    <div class="flex flex-col w-full border border-slate-800 rounded-md px-2">
+                        <mat-label class="flex items-center font-medium text-black text-xl">
+                            <span class="font-medium text-black underline text-xl mr-2" >Points</span>
+                            <button mat-icon-button color="primary" type="button" (click)="addRow()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </mat-label>
+    
+    
+                        <div formArrayName="agenda">
+                            <div *ngFor="let row of agenda.controls; let i=index" [formGroupName]="i"
+                                class="flex items-center gap-4 mb-2">
+                                <mat-form-field class="flex-1">
+                                    <mat-label>Point n°{{i+1}}</mat-label>
+                                    <input matInput formControlName="point" type="text" placeholder="type" />
+                                </mat-form-field>
+                                <button mat-icon-button color="warn" (click)="removeRow(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full py-[5px] my-[5px]">
+                    <h2>CONTE RENDU</h2>
+
+                    <div class="flex flex-col w-full border border-slate-800 rounded-md px-2">
+                        <mat-label class="flex items-center font-medium text-black text-xl">
+                            <span class="font-medium text-black underline text-xl mr-2" >Points</span>
+                            <button mat-icon-button color="primary" type="button" (click)="addRowConteRendu()">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </mat-label>
+    
+    
+                        <div formArrayName="conteRendu">
+                            <div *ngFor="let row of conteRendu.controls; let i=index" [formGroupName]="i"
+                                class="flex items-center gap-4 mb-2">
+                                <mat-form-field class="flex-1">
+                                    <mat-label>Point n°{{i+1}}</mat-label>
+                                    <input matInput formControlName="point" type="text" placeholder="type" />
+                                </mat-form-field>
+                                <button mat-icon-button color="warn" (click)="removeRowConteRendu(i)">
+                                    <mat-icon>delete</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full py-[5px] my-[5px]">
+                    <mat-form-field 
+                        class="w-5/6"
+                        appearance="fill"
+                    >
+                        <mat-label>Prière de cloture</mat-label>
+            
+                        <input 
+                            type="text"
+                            class="p-4 border border-black bg-white"
+                            placeholder="Prière d'ouverture"
+                            matInput
+                            formControlName="memberClosePrayer"
+                            autocomplete="on"
+                            [matAutocomplete]="autoMemberOpenPrayerList" 
+                            (input)="onSelectedMemberOpenPrayerChanged($event)"
+                        />
+                        <mat-autocomplete 
+                            #autoMemberOpenPrayerList="matAutocomplete" 
+                            [displayWith]="displayFnOpenPayerList"
+                            (optionSelected)="onMemberOpenPrayerSelected($event)"
+                        >
+                            <mat-option 
+                                *ngFor="let c of memberOpenPrayerListFiltered" 
+                                [value]="c"
+                            > 
+                                {{ c.name }} 
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+
+                <div class="w-full py-[5px] my-[5px]">
+                    <!--date du jours-->
+                    <mat-form-field>
+                        <mat-label>Choisissez une date</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="formattedNextDate">
+                        <mat-hint>DD/MM/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    
+        <button mat-flat-button type="submit">Générer PDF</button>
+    </form>
+</dir>
