@@ -335,3 +335,14 @@ public submitForm() {
     this._unsubscribeAll.complete();
   }
 }
+
+
+
+// Lors de la lecture du manuel nous avons lus l'importance d'inviter les frere a faire leur soirée au foyer (encensent soirée familiale) nous voulons pour le prochain mini conseille de faire une question sur ce sujet plus durent nos entretien de service pastoral inviter les equipe a faire de même
+
+// nous devons inviter nos frère de passer par la présidence de college quand ils ont besoin de service pour mettre en place une activité de service 
+
+// nous avons proposer comme equipe de service pastoral une equipe anglophone pour aider les nouveau converti anglophone qui sera frere Narraidoo et Frere Raveneau -> pour servire Aziz et Hunga quand nous allons chez Hunga nous auront dans notre equipe Aziz ensuite pour Jarom-Elisée tautu sera servie par l'équipe de desirer et Cedric 
+
+
+// trouver des serveur pastoraux pour ceux qui en on pas 

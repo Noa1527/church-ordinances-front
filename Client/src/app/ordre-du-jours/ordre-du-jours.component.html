@@ -1,4 +1,4 @@
-<dir class="w-full p-3">
+<div class="w-full p-3">
 
     <form [formGroup]="pdfForm" (ngSubmit)="submitForm()" >
         <div class="w-full flex ">
@@ -308,7 +308,7 @@
                     <!--date du jours-->
                     <mat-form-field>
                         <mat-label>Choisissez une date</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="formattedNextDate">
+                        <input matInput [matDatepicker]="picker2" formControlName="formattedNextDate">
                         <mat-hint>DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
                         <mat-datepicker #picker2></mat-datepicker>
@@ -319,4 +319,4 @@
     
         <button mat-flat-button type="submit">Générer PDF</button>
     </form>
-</dir>
+</div>

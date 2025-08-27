@@ -17,7 +17,7 @@
                 <ng-content></ng-content>
             </app-elder-pastoral>
         </mat-tab>
-        <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="Service pastoral présidence des anciens">
+        <mat-tab *ngIf="authService.hasRole('Prêtrise') || authService.hasRole('Président De Branche')" label="Ordre du jours reunions de presidence">
             <app-ordre-du-jours>
                 <ng-content></ng-content>
             </app-ordre-du-jours>
