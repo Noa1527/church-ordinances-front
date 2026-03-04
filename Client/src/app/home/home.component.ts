@@ -10,6 +10,7 @@ import { JeuneGensComponent } from 'src/app/jeune-gens/jeune-gens.component';
 import { PrimaireComponent } from 'src/app/primaire/primaire.component';
 import { SocieteComponent } from 'src/app/societe/societe.component';
 import { EmailComponent } from 'src/app/email/email.component';
+import { OrdreDuJoursComponent } from '../ordre-du-jours/ordre-du-jours.component';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ import { EmailComponent } from 'src/app/email/email.component';
     PrimaireComponent,
     SocieteComponent,
     EmailComponent,
+    OrdreDuJoursComponent
   ],
 })
 export class HomeComponent {

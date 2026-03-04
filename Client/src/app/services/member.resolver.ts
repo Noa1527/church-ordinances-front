@@ -36,8 +36,3 @@ export const AllMembersResolver: ResolveFn<Members> = () => {
     
     return memberService.getAllMembers(region);
 };
-
-
-
-
-
