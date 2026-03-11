@@ -115,15 +115,15 @@
       <div
         cdkDropList
         class="example-list"
-        [id]="i.toString()"
-        [cdkDropListData]="team._members"
+        [id]="'members-' + i"
+        [cdkDropListData]="team._members || []"
         (cdkDropListDropped)="dropMember($event)"
         [cdkDropListEnterPredicate]="onlyMembers"
       >
         <div 
           cdkDrag  
           class="team-box" 
-          *ngFor="let member of team._members"
+          *ngFor="let member of team._members "
           [cdkDragData]="getDragMemberData(member, 'member')" 
         >
           {{getMemberName(member._id || '')}}
@@ -137,8 +137,8 @@
       <div
         cdkDropList
         class="family-list"
-        [id]="i.toString()"
-        [cdkDropListData]="team._families"
+        [id]="'families-' + i"
+        [cdkDropListData]="team._families || []"
         [cdkDropListEnterPredicate]="onlyFamilies"
         (cdkDropListDropped)="dropFamily($event)"
       >

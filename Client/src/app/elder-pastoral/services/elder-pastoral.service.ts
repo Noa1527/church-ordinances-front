@@ -68,7 +68,7 @@ export class TeamsService {
   getTeams(region: Regions): Observable<Teams> {
     return this.http.get('/api/teams', { params: { region } }).pipe(
       tap((teams: any) => {
-        console.log('teams', teams);
+        console.log('getTeams teams', teams);
         
         this.teams = teams;
       })
@@ -164,7 +164,7 @@ export class TeamsService {
     const numStr = team.seq 
     return this.http.patch(`/api/teams/${numStr}`, team).pipe(
       tap((teams: any) => {
-        console.log('teams', teams);
+        console.log('<-- updateTeams teams service -->', teams);
         this.teams = teams;
         this.getTeams(region).subscribe();
       })
